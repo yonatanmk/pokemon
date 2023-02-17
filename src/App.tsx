@@ -9,11 +9,13 @@ import Table from './components/Table';
 import { formatPokemonRow } from './util';
 import type { ITableColumn, IPokemonRow, IPokemonQueryData } from './interfaces';
 
+const PAGE_SIZE = 20;
+
 
 
 const GET_POKEMON = gql`
-query {
-  pokemon_v2_pokemon(limit: 60) {
+query Pokemon($offset: Int!) {
+  pokemon_v2_pokemon(limit: ${PAGE_SIZE}, offset: $offset) {
     id
     name
     height
@@ -76,14 +78,33 @@ export const columns: ITableColumn<IPokemonRow>[] = [
 
 function App() {
   const [pokemonRows, setPokemonRows] = useState<IPokemonRow[]>([])
-  const pokemonData = useQuery<IPokemonQueryData>(GET_POKEMON)
-  
+  const [page, setPage] = useState<number>(0)
+
+  const { data: pokemonData, loading: pokemonLoading, error: pokemonError, refetch: pokemonRefetch } = useQuery<IPokemonQueryData>(GET_POKEMON, {
+    variables: { offset: page * PAGE_SIZE },
+  })
+
   useEffect(() => {
-    const {data, loading, error} = pokemonData;
-    if (data && !loading && !error) {
-      setPokemonRows(data.pokemon_v2_pokemon.map( poke => formatPokemonRow(poke)))
+    if (pokemonData && !pokemonLoading && !pokemonError) {
+      console.log('loadNextPage')
+      console.log(pokemonData)
+
+      setPokemonRows(pokemonData.pokemon_v2_pokemon.map( poke => formatPokemonRow(poke)))
     }
   }, [pokemonData])
+
+
+  const loadNextPage = () => {
+    console.log('loadNextPage')
+    console.log({
+      nextPage: page + 1,
+      nextOffset: (page + 1) * PAGE_SIZE,
+    })
+    setPage(prev => prev + 1)
+    pokemonRefetch({
+      offset: (page + 1) * PAGE_SIZE,
+    })
+  }
 
   return (
     <div className={styles.App}>
@@ -95,6 +116,7 @@ function App() {
         backupSortPredicate="id"
         filters={[]}
       />
+      <button onClick={loadNextPage}>Load More</button>
     </div>
   );
 }
