@@ -9,7 +9,6 @@ $sidebar-padding: 1rem;
 
   &__Body {
     display: flex
-    
   }
 
   &__Sidebar {
@@ -21,12 +20,20 @@ $sidebar-padding: 1rem;
 
     &__Row {
       display: flex;
+      flex-wrap: wrap;
+      margin-bottom: 1rem;
+
+      &--label {
+        text-align: center;
+        p {
+          margin: 0 0 1rem 0;
+        }
+      }
     }
 
     &__Search {
       position: relative;
       flex: 1;
-      margin-bottom: 1rem;
   
       input {
         @include input;
@@ -76,7 +83,6 @@ $sidebar-padding: 1rem;
 .Header {
   color: #fff;
   background-color: #EF5350;
-  // padding: 18px 0;
   height: $header-height;
   display: flex;
   justify-content: center;
@@ -85,4 +91,20 @@ $sidebar-padding: 1rem;
   h1 {
     margin: 0;
   }
+}
+
+.Checkbox {
+  width: 50%;
+  box-sizing: border-box;
+  display: flex;
+  padding: 0.25rem 0 0.25rem 10%;
+
+  &__checkbox {
+    margin-right: 0.5rem;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  &__label {}
 }
