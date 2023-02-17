@@ -14,7 +14,11 @@ export interface IPokemonRow {
       abilities: IPokemonAbility[];
     }
   }
-  types: IType[];
+  types: {
+    props: {
+      types: IType[],
+    }
+  } 
 }
 
 export interface IPokemonAbility {

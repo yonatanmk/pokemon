@@ -6,9 +6,10 @@ import { BsSearch } from "react-icons/bs";
 
 import PokeSpriteCell from './components/PokeSpriteCell';
 import AbilitiesCell from './components/AbilitiesCell';
+import TypesCell from './components/TypesCell';
 import Table from './components/Table';
 import { formatPokemonRow, formatPokemonType } from './util';
-import type { ITableColumn, IPokemonRow, IPokemonQueryData, ITypeQueryDatum, IType } from './interfaces';
+import type { ITableColumn, IPokemonRow, IPokemonQueryData, IType } from './interfaces';
 
 const PAGE_SIZE = 20;
 
@@ -85,10 +86,17 @@ export const columns: ITableColumn<IPokemonRow>[] = [
   },
   {
     name: 'Abilities',
-    index: 6,
+    index: 7,
     field: 'abilities',
     disableSort: true,
     component: AbilitiesCell,
+  },
+  {
+    name: 'Types',
+    index: 7,
+    field: 'types',
+    disableSort: true,
+    component: TypesCell,
   },
 ];
 

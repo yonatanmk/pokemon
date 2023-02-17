@@ -1,5 +1,5 @@
 import capitalize from 'lodash/capitalize';
-import type { IPokemonRow, IPokemonQueryDatum, ITypeQueryDatum } from '../interfaces';
+import type { IPokemonRow, IPokemonQueryDatum, ITypeQueryDatum, IType } from '../interfaces';
 
 export const formatPokemonRow = (pokemonData: IPokemonQueryDatum): IPokemonRow => {
   const { id, name, height, weight, pokemon_v2_pokemonabilities, pokemon_v2_pokemontypes } = pokemonData;
@@ -24,11 +24,15 @@ export const formatPokemonRow = (pokemonData: IPokemonQueryDatum): IPokemonRow =
         }))
       }
     },
-    types: pokemon_v2_pokemontypes.map(formatPokemonType)
+    types: {
+      props: {
+        types: pokemon_v2_pokemontypes.map(formatPokemonType)
+      }
+    }
   }
 }
 
-export const formatPokemonType = (type: ITypeQueryDatum) => ({
+export const formatPokemonType = (type: ITypeQueryDatum): IType => ({
   id: type.type_id,
   name: capitalize(type.pokemon_v2_type.name),
 });
