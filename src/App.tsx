@@ -12,11 +12,9 @@ import type { ITableColumn, IPokemonRow, IPokemonQueryData } from './interfaces'
 
 const PAGE_SIZE = 20;
 
-
-
 const GET_POKEMON = gql`
-query Pokemon($offset: Int!) {
-  pokemon_v2_pokemon(limit: ${PAGE_SIZE}, offset: $offset) {
+query Pokemon($offset: Int!, $nameSearch: String) {
+  pokemon_v2_pokemon(limit: ${PAGE_SIZE}, offset: $offset, where: { name: { _like: $nameSearch } }) {
     id
     name
     height
@@ -83,32 +81,39 @@ function App() {
   const [search, setSearch] = useState('')
 
   const { data: pokemonData, loading: pokemonLoading, error: pokemonError, refetch: pokemonRefetch } = useQuery<IPokemonQueryData>(GET_POKEMON, {
-    variables: { offset: page * PAGE_SIZE },
+    variables: { 
+      offset: page * PAGE_SIZE,
+      nameSearch: `%%`
+    },
   })
 
   useEffect(() => {
     if (pokemonData && !pokemonLoading && !pokemonError) {
       const newRows = [...pokemonRows, ...pokemonData.pokemon_v2_pokemon.map( poke => formatPokemonRow(poke))]
-      setPokemonRows(newRows)
+      setPokemonRows(prev => page === 0 ? newRows : [...prev, ...newRows])
     }
   }, [pokemonData])
 
 
   const loadNextPage = () => {
-    console.log('loadNextPage')
-    console.log({
-      nextPage: page + 1,
-      nextOffset: (page + 1) * PAGE_SIZE,
-    })
     setPage(prev => prev + 1)
     pokemonRefetch({
       offset: (page + 1) * PAGE_SIZE,
     })
   }
 
-  const handleSearch = (e: React.FormEvent<HTMLInputElement>) => {
+  const handleSearchChange = (e: React.FormEvent<HTMLInputElement>) => {
     setSearch(e.currentTarget.value);
   }
+
+  const onSearch = () => {
+    setPage(0)
+    setPokemonRows([])
+    pokemonRefetch({ offset: 0, nameSearch: `%${search}%` })
+  }
+
+  console.log('_______')
+  console.log(pokemonData)
 
   return (
     <div className={styles.App}>
@@ -119,12 +124,12 @@ function App() {
         <div className={styles.App__Sidebar}>
           <div className={styles.App__Sidebar__Row}>
             <div className={styles.App__Sidebar__Search}>
-              <input id="people-search" type="text" value={search} onChange={handleSearch} placeholder="Search Name" />
+              <input id="people-search" type="text" value={search} onChange={handleSearchChange} placeholder="Search Name" />
               <BsSearch />
             </div>
-            <button className={styles.App__Sidebar__SearchButton}>Search</button>
+            <button className={styles.App__Sidebar__SearchButton} onClick={onSearch}>Search</button>
           </div>
-          <div className={styles.App__Sidebar__Row}><p>{search}</p></div>
+          {/* <div className={styles.App__Sidebar__Row}><p>{search}</p></div> */}
         </div>
         <div className={styles.App__Content}>
           <Table
