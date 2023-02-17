@@ -1,7 +1,7 @@
 import style from "./HeaderCell.module.scss";
 import { useContext } from 'react';
 import { BsArrowUp, BsArrowDown } from "react-icons/bs";
-import classnames from "classNames";
+import classnames from "classnames";
 import { SORT_ORDERS } from '../util';
 import { TableSortContext } from '../contexts';
 
