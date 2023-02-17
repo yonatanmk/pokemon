@@ -69,20 +69,13 @@ export const columns: ITableColumn<IPokemonRow>[] = [
     index: 6,
     field: 'abilities',
     disableSort: true,
-    // formatFunction: row => row.abilities.map(ability => ability.name).join('\n')
     component: AbilitiesCell,
   },
 ];
 
 function App() {
   const [pokemonRows, setPokemonRows] = useState<IPokemonRow[]>([])
-
   const pokemonData = useQuery<IPokemonQueryData>(GET_POKEMON)
-  // const items = useQuery(GET_ITEMS)
-  console.log(pokemonData)
-  // console.log(items)
-
-
   
   useEffect(() => {
     const {data, loading, error} = pokemonData;
@@ -91,21 +84,8 @@ function App() {
     }
   }, [pokemonData])
 
-  console.log(pokemonData)
-  console.log(pokemonRows)
-
-  // const pokemonRows = pokemon.map(poke => ({
-  //   ...poke,
-  //   image: {
-  //     props: {
-  //       id: poke.id,
-  //       name: poke.name,
-  //     }
-  //   }
-  // }))
   return (
     <div className={styles.App}>
-      <p>Hello World</p>
       <Table
         id="_id"
         rows={pokemonRows} 
