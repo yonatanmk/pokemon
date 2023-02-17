@@ -21,6 +21,7 @@ query {
     pokemon_v2_pokemonabilities{
       id
       pokemon_v2_ability {
+        id
         name
         pokemon_v2_abilityeffecttexts(limit: 1, where: { language_id:{ _eq: 9 } }) {
           short_effect

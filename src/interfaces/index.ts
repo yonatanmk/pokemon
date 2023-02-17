@@ -17,6 +17,7 @@ export interface IPokemonRow {
 }
 
 export interface IPokemonAbility {
+  id: number;
   name: string;
   effect: string;
   short_effect: string;
@@ -37,6 +38,7 @@ export interface IPokemonQueryDatum {
 export interface IPokemonQueryAbility {
   id: number;
   pokemon_v2_ability: {
+    id: number;
     name: string;
     pokemon_v2_abilityeffecttexts: IPokemonQueryAbilityText[];
   }

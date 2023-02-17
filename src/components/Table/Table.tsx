@@ -17,7 +17,7 @@ interface ITableProps<T> {
   backupSortPredicate: string;
   filters?: IFilter[];
   id: string | number;
-};
+}
 
 function Table<T extends object>({ className, rows, columns, defaultSortPredicate, backupSortPredicate, filters }: ITableProps<T>) {
   const [sortPredicate, setSortPredicate] = useState(defaultSortPredicate);
