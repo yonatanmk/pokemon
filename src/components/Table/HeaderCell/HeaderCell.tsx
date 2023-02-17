@@ -8,9 +8,10 @@ import { TableSortContext } from '../contexts';
 export type IHeaderCellProps = {
   name: string;
   field: string;
+  disableSort: boolean;
 };
 
-function HeaderCell({ name, field }: IHeaderCellProps) {
+function HeaderCell({ name, field, disableSort }: IHeaderCellProps) {
   const { sortPredicate, setSortPredicate, sortOrder, setSortOrder } = useContext(TableSortContext);
 
   const isSorted = field === sortPredicate;
@@ -22,7 +23,9 @@ function HeaderCell({ name, field }: IHeaderCellProps) {
   }
 
   const onHeaderClick = () => {
-    if (isSorted) {
+    if (disableSort) {
+      return;
+    } else if (isSorted) {
       toggleSortOrder()
     } else {
       setSortPredicate(field)
@@ -32,7 +35,7 @@ function HeaderCell({ name, field }: IHeaderCellProps) {
 
   return (
     <div className={classnames(style.HeaderCell, {[ style.HeaderCell__unsorted]: !isSorted })}>
-      <button onClick={onHeaderClick}>
+      <button disabled={disableSort} onClick={onHeaderClick}>
         <p>{name}</p>
         <ArrowIcon />
       </button>

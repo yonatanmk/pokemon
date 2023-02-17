@@ -44,6 +44,7 @@ function Table<T extends object>({ className, rows, columns, defaultSortPredicat
           field: col.field,
           sortPredicate,
           sortOrder,
+          disableSort: !!col.disableSort,
         }
       },
     }

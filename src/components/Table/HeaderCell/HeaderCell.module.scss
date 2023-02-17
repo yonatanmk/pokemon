@@ -21,6 +21,11 @@
       color: #0B95FF;
     }
 
+    &[disabled] {
+      color: black;
+      cursor: default;
+    }
+
     svg {
       height: 1rem;
       width: 1rem;
