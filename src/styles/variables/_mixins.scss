@@ -12,3 +12,16 @@
   border: 1px solid $input-border-gray;
 }
 
+@mixin button {
+  outline: none;
+  color: #fff;
+  background-color: #EF5350;
+  border: 1px solid transparent;
+  cursor: pointer;
+  text-transform: uppercase;
+  white-space: normal;
+  font-weight: 700;
+  &:hover {
+    background-color: #C62828;
+  }
+}

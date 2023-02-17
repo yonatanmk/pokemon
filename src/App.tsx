@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import capitalize from 'lodash/capitalize';
 import { useQuery, gql } from "@apollo/client"
 import styles from './App.module.scss';
+import { BsSearch } from "react-icons/bs";
 
 import PokeSpriteCell from './components/PokeSpriteCell';
 import AbilitiesCell from './components/AbilitiesCell';
@@ -79,6 +80,7 @@ export const columns: ITableColumn<IPokemonRow>[] = [
 function App() {
   const [pokemonRows, setPokemonRows] = useState<IPokemonRow[]>([])
   const [page, setPage] = useState<number>(0)
+  const [search, setSearch] = useState('')
 
   const { data: pokemonData, loading: pokemonLoading, error: pokemonError, refetch: pokemonRefetch } = useQuery<IPokemonQueryData>(GET_POKEMON, {
     variables: { offset: page * PAGE_SIZE },
@@ -104,17 +106,39 @@ function App() {
     })
   }
 
+  const handleSearch = (e: React.FormEvent<HTMLInputElement>) => {
+    setSearch(e.currentTarget.value);
+  }
+
   return (
     <div className={styles.App}>
-      <Table
-        id="_id"
-        rows={pokemonRows} 
-        columns={columns} 
-        defaultSortPredicate="id" 
-        backupSortPredicate="id"
-        filters={[]}
-      />
-      <button className={styles.loadmore} onClick={loadNextPage}>Load More</button>
+      <div className={styles.Header}>
+        <h1>Pokédex</h1>
+      </div>
+      <div className={styles.App__Body}>
+        <div className={styles.App__Sidebar}>
+          <div className={styles.App__Sidebar__Row}>
+            <div className={styles.App__Sidebar__Search}>
+              <input id="people-search" type="text" value={search} onChange={handleSearch} placeholder="Search Name" />
+              <BsSearch />
+            </div>
+            <button className={styles.App__Sidebar__SearchButton}>Search</button>
+          </div>
+          <div className={styles.App__Sidebar__Row}><p>{search}</p></div>
+        </div>
+        <div className={styles.App__Content}>
+          <Table
+            id="_id"
+            rows={pokemonRows} 
+            columns={columns} 
+            defaultSortPredicate="id" 
+            backupSortPredicate="id"
+            filters={[]}
+          />
+          <button className={styles.loadmore} onClick={loadNextPage}>Load More</button>
+        </div>
+      </div>
+
     </div>
   );
 }
