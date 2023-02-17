@@ -2,7 +2,6 @@ import type { IPokemonRow, IPokemonQueryDatum } from '../interfaces';
 
 export const formatPokemonRow = (pokemonData: IPokemonQueryDatum): IPokemonRow => {
   const { id, name, height, weight, pokemon_v2_pokemonabilities } = pokemonData;
-  // debugger;
   return {
     id,
     name,
@@ -18,12 +17,11 @@ export const formatPokemonRow = (pokemonData: IPokemonQueryDatum): IPokemonRow =
       props: {
         abilities: pokemon_v2_pokemonabilities.map(ability => ({
           id: ability.id,
-          name: ability.pokemon_v2_ability.name,
-          effect: ability.pokemon_v2_ability.pokemon_v2_abilityeffecttexts[0].effect,
-          short_effect: ability.pokemon_v2_ability.pokemon_v2_abilityeffecttexts[0].short_effect,
+          name: ability.pokemon_v2_ability?.name,
+          effect: ability.pokemon_v2_ability?.pokemon_v2_abilityeffecttexts[0]?.effect,
+          short_effect: ability.pokemon_v2_ability?.pokemon_v2_abilityeffecttexts[0]?.short_effect,
         }))
       }
     }
-
   }
 }

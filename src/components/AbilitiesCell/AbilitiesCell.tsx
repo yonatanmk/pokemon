@@ -13,7 +13,7 @@ function AbilitiesCell({ abilities }: IAbilitiesCellProps) {
   return (
     <div className={style.AbilitiesCell}>
       {abilities.map(ability => (
-        <Tippy key={ability.id} content={<span>{ability.short_effect}</span>}>
+        <Tippy key={ability.id} content={<span>{ability.short_effect}</span>} disabled={!ability.short_effect}>
           <p className={style.AbilitiesCell__text}>{startCase(ability.name.replace('-', ' '))}</p>
         </Tippy>
       ))}
