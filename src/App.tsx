@@ -9,17 +9,6 @@ import capitalize from 'lodash/capitalize';
 import type { IPokemon, IPokemonQueryData } from './interfaces';
 import { formatPokemon } from './util';
 
-// interface IPokemon {
-//   id: string;
-//   name: string;
-//   height: number;
-//   weight: number;
-// }
-
-// interface IPokemonQueryResp {
-//   pokemon_v2_pokemon: IPokemon[];
-// }
-
 
 const GET_POKEMON = gql`
 query {
@@ -74,13 +63,13 @@ export const columns: ITableColumn<IPokemon>[] = [
     disableSort: true,
     component: PokeSprite,
   },
-  // {
-  //   name: 'Abilities',
-  //   index: 6,
-  //   field: 'image',
-  //   disableSort: true,
-  //   component: PokeSprite,
-  // },
+  {
+    name: 'Abilities',
+    index: 6,
+    field: 'image',
+    disableSort: true,
+    component: PokeSprite,
+  },
 ];
 
 function App() {
