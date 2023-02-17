@@ -3,14 +3,12 @@ import capitalize from 'lodash/capitalize';
 import { useQuery, gql } from "@apollo/client"
 import styles from './App.module.scss';
 import { BsSearch } from "react-icons/bs";
-import uniqBy from 'lodash/uniqBy';
 
 import PokeSpriteCell from './components/PokeSpriteCell';
 import AbilitiesCell from './components/AbilitiesCell';
 import Table from './components/Table';
-import { formatPokemonRow } from './util';
+import { formatPokemonRow, formatPokemonType } from './util';
 import type { ITableColumn, IPokemonRow, IPokemonQueryData, ITypeQueryDatum, IType } from './interfaces';
-import { type } from 'os';
 
 const PAGE_SIZE = 20;
 
@@ -31,6 +29,12 @@ query Pokemon($offset: Int!, $nameSearch: String) {
           effect
           language_id
         }
+      }
+    }
+    pokemon_v2_pokemontypes {
+      type_id
+      pokemon_v2_type {
+        name
       }
     }
   }
@@ -105,15 +109,13 @@ function App() {
 
   useEffect(() => {
     if (pokemonData && !pokemonLoading && !pokemonError) {
+      console.log(pokemonData)
       const newRows = [...pokemonRows, ...pokemonData.pokemon_v2_pokemon.map( poke => formatPokemonRow(poke))]
       setPokemonRows(prev => page === 0 ? newRows : [...prev, ...newRows])
       setResultsCount(pokemonData.pokemon_v2_pokemon_aggregate.aggregate.count)
 
       if (allTypes.length === 0) {
-        setAllTypes(pokemonData.pokemon_v2_pokemontype.map((type: ITypeQueryDatum) => ({ 
-          id: type.type_id,
-          name: capitalize(type.pokemon_v2_type.name),
-        })));
+        setAllTypes(pokemonData.pokemon_v2_pokemontype.map(formatPokemonType));
       }
     }
   }, [pokemonData])

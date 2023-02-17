@@ -11,9 +11,10 @@ export interface IPokemonRow {
   }
   abilities: {
     props: {
-      abilities: IPokemonAbility[]
+      abilities: IPokemonAbility[];
     }
   }
+  types: IType[];
 }
 
 export interface IPokemonAbility {
@@ -35,6 +36,7 @@ export interface IPokemonQueryDatum {
   height: number;
   weight: number;
   pokemon_v2_pokemonabilities: IPokemonQueryAbility[]
+  pokemon_v2_pokemontypes: ITypeQueryDatum[]
 }
 
 export interface ICountQueryDatum {

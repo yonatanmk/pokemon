@@ -1,7 +1,8 @@
-import type { IPokemonRow, IPokemonQueryDatum } from '../interfaces';
+import capitalize from 'lodash/capitalize';
+import type { IPokemonRow, IPokemonQueryDatum, ITypeQueryDatum } from '../interfaces';
 
 export const formatPokemonRow = (pokemonData: IPokemonQueryDatum): IPokemonRow => {
-  const { id, name, height, weight, pokemon_v2_pokemonabilities } = pokemonData;
+  const { id, name, height, weight, pokemon_v2_pokemonabilities, pokemon_v2_pokemontypes } = pokemonData;
   return {
     id,
     name,
@@ -22,6 +23,12 @@ export const formatPokemonRow = (pokemonData: IPokemonQueryDatum): IPokemonRow =
           short_effect: ability.pokemon_v2_ability?.pokemon_v2_abilityeffecttexts[0]?.short_effect,
         }))
       }
-    }
+    },
+    types: pokemon_v2_pokemontypes.map(formatPokemonType)
   }
 }
+
+export const formatPokemonType = (type: ITypeQueryDatum) => ({
+  id: type.type_id,
+  name: capitalize(type.pokemon_v2_type.name),
+});
