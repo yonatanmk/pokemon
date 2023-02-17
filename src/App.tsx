@@ -86,10 +86,8 @@ function App() {
 
   useEffect(() => {
     if (pokemonData && !pokemonLoading && !pokemonError) {
-      console.log('loadNextPage')
-      console.log(pokemonData)
-
-      setPokemonRows(pokemonData.pokemon_v2_pokemon.map( poke => formatPokemonRow(poke)))
+      const newRows = [...pokemonRows, ...pokemonData.pokemon_v2_pokemon.map( poke => formatPokemonRow(poke))]
+      setPokemonRows(newRows)
     }
   }, [pokemonData])
 
@@ -116,7 +114,7 @@ function App() {
         backupSortPredicate="id"
         filters={[]}
       />
-      <button onClick={loadNextPage}>Load More</button>
+      <button className={styles.loadmore} onClick={loadNextPage}>Load More</button>
     </div>
   );
 }
