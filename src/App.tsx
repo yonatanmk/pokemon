@@ -6,16 +6,19 @@ import type { ITableColumn } from './interfaces';
 import PokeSprite from './components/PokeSprite';
 import capitalize from 'lodash/capitalize';
 
-interface IPokemon {
-  id: string;
-  name: string;
-  height: number;
-  weight: number;
-}
+import type { IPokemon, IPokemonQueryData } from './interfaces';
+import { formatPokemon } from './util';
 
-interface IPokemonQueryResp {
-  pokemon_v2_pokemon: IPokemon[];
-}
+// interface IPokemon {
+//   id: string;
+//   name: string;
+//   height: number;
+//   weight: number;
+// }
+
+// interface IPokemonQueryResp {
+//   pokemon_v2_pokemon: IPokemon[];
+// }
 
 
 const GET_POKEMON = gql`
@@ -25,9 +28,20 @@ query {
     name
     height
     weight
+    pokemon_v2_pokemonabilities{
+      id
+      pokemon_v2_ability {
+        name
+        pokemon_v2_abilityeffecttexts(limit: 1, where: { language_id:{ _eq: 9 } }) {
+          short_effect
+          effect
+          language_id
+        }
+      }
+    }
   }
 }
-`
+`;
 
 export const columns: ITableColumn<IPokemon>[] = [
   {
@@ -53,19 +67,26 @@ export const columns: ITableColumn<IPokemon>[] = [
     field: 'weight',
     formatFunction: row => `${row.weight / 10}kg`
   },
-    {
+  {
     name: 'Image',
     index: 3,
     field: 'image',
     disableSort: true,
     component: PokeSprite,
   },
+  // {
+  //   name: 'Abilities',
+  //   index: 6,
+  //   field: 'image',
+  //   disableSort: true,
+  //   component: PokeSprite,
+  // },
 ];
 
 function App() {
   const [pokemon, setPokemon] = useState<IPokemon[]>([])
 
-  const pokemonData = useQuery<IPokemonQueryResp>(GET_POKEMON)
+  const pokemonData = useQuery<IPokemonQueryData>(GET_POKEMON)
   // const items = useQuery(GET_ITEMS)
   console.log(pokemonData)
   // console.log(items)
@@ -75,9 +96,12 @@ function App() {
   useEffect(() => {
     const {data, loading, error} = pokemonData;
     if (data && !loading && !error) {
-      setPokemon(data.pokemon_v2_pokemon)
+      setPokemon(data.pokemon_v2_pokemon.map( poke => formatPokemon(poke)))
     }
   }, [pokemonData])
+
+  console.log(pokemonData)
+  console.log(pokemon)
 
   const pokemonRows = pokemon.map(poke => ({
     ...poke,
@@ -89,9 +113,8 @@ function App() {
     }
   }))
   return (
-    <>
-      <p className={styles.hello}>Hello World</p>
-      {/* {pokemon.map(poke => <p>{poke.name}</p>)} */}
+    <div className={styles.App}>
+      <p>Hello World</p>
       <Table
         id="_id"
         rows={pokemonRows} 
@@ -100,7 +123,7 @@ function App() {
         backupSortPredicate="id"
         filters={[]}
       />
-    </>
+    </div>
   );
 }
 
