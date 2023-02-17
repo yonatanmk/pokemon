@@ -32,6 +32,11 @@ query Pokemon($offset: Int!, $nameSearch: String) {
       }
     }
   }
+  pokemon_v2_pokemon_aggregate(where: { name: { _like: $nameSearch } }) {
+    aggregate {
+      count
+    }
+  }
 }
 `;
 
@@ -79,6 +84,8 @@ function App() {
   const [pokemonRows, setPokemonRows] = useState<IPokemonRow[]>([])
   const [page, setPage] = useState<number>(0)
   const [search, setSearch] = useState('')
+  const [resultsCount, setResultsCount] = useState(0)
+
 
   const { data: pokemonData, loading: pokemonLoading, error: pokemonError, refetch: pokemonRefetch } = useQuery<IPokemonQueryData>(GET_POKEMON, {
     variables: { 
@@ -91,9 +98,9 @@ function App() {
     if (pokemonData && !pokemonLoading && !pokemonError) {
       const newRows = [...pokemonRows, ...pokemonData.pokemon_v2_pokemon.map( poke => formatPokemonRow(poke))]
       setPokemonRows(prev => page === 0 ? newRows : [...prev, ...newRows])
+      setResultsCount(pokemonData.pokemon_v2_pokemon_aggregate.aggregate.count)
     }
   }, [pokemonData])
-
 
   const loadNextPage = () => {
     setPage(prev => prev + 1)
@@ -112,8 +119,7 @@ function App() {
     pokemonRefetch({ offset: 0, nameSearch: `%${search}%` })
   }
 
-  console.log('_______')
-  console.log(pokemonData)
+  const onLastPage = pokemonRows.length === resultsCount;
 
   return (
     <div className={styles.App}>
@@ -122,6 +128,9 @@ function App() {
       </div>
       <div className={styles.App__Body}>
         <div className={styles.App__Sidebar}>
+        <div className={styles.App__Sidebar__Row}>
+          <p>{resultsCount} Matching Pokémon</p>
+        </div>
           <div className={styles.App__Sidebar__Row}>
             <div className={styles.App__Sidebar__Search}>
               <input id="people-search" type="text" value={search} onChange={handleSearchChange} placeholder="Search Name" />
@@ -129,7 +138,6 @@ function App() {
             </div>
             <button className={styles.App__Sidebar__SearchButton} onClick={onSearch}>Search</button>
           </div>
-          {/* <div className={styles.App__Sidebar__Row}><p>{search}</p></div> */}
         </div>
         <div className={styles.App__Content}>
           <Table
@@ -140,7 +148,7 @@ function App() {
             backupSortPredicate="id"
             filters={[]}
           />
-          <button className={styles.loadmore} onClick={loadNextPage}>Load More</button>
+          {!onLastPage && !pokemonLoading && <button className={styles.loadmore} onClick={loadNextPage}>Load More</button>}
         </div>
       </div>
 

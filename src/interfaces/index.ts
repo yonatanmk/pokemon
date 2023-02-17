@@ -24,7 +24,8 @@ export interface IPokemonAbility {
 }
 
 export interface IPokemonQueryData {
-  pokemon_v2_pokemon: [IPokemonQueryDatum]
+  pokemon_v2_pokemon: IPokemonQueryDatum[];
+  pokemon_v2_pokemon_aggregate: ICountQueryDatum;
 }
 
 export interface IPokemonQueryDatum {
@@ -33,6 +34,12 @@ export interface IPokemonQueryDatum {
   height: number;
   weight: number;
   pokemon_v2_pokemonabilities: IPokemonQueryAbility[]
+}
+
+export interface ICountQueryDatum {
+  aggregate: {
+    count: number;
+  }
 }
 
 export interface IPokemonQueryAbility {
