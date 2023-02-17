@@ -3,6 +3,7 @@ import { useQuery, gql } from "@apollo/client"
 import styles from './App.module.scss';
 import Table from './components/Table';
 import type { ITableColumn } from './interfaces';
+import PokeSprite from './components/PokeSprite';
 
 interface IPokemon {
   id: string;
@@ -40,13 +41,20 @@ export const columns: ITableColumn<IPokemon>[] = [
   },
   {
     name: 'Height',
-    index: 3,
+    index: 4,
     field: 'height',
   },
   {
     name: 'Weight',
-    index: 4,
+    index: 5,
     field: 'weight',
+  },
+    {
+    name: 'Image',
+    index: 3,
+    field: 'image',
+    disableSort: true,
+    component: PokeSprite,
   },
 ];
 
@@ -66,13 +74,23 @@ function App() {
       setPokemon(data.pokemon_v2_pokemon)
     }
   }, [pokemonData])
+
+  const pokemonRows = pokemon.map(poke => ({
+    ...poke,
+    image: {
+      props: {
+        id: poke.id,
+        name: poke.name,
+      }
+    }
+  }))
   return (
     <>
       <p className={styles.hello}>Hello World</p>
-      {pokemon.map(poke => <p>{poke.name}</p>)}
+      {/* {pokemon.map(poke => <p>{poke.name}</p>)} */}
       <Table
         id="_id"
-        rows={pokemon} 
+        rows={pokemonRows} 
         columns={columns} 
         defaultSortPredicate="id" 
         backupSortPredicate="id"
