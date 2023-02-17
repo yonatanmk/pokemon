@@ -4,6 +4,7 @@ import styles from './App.module.scss';
 import Table from './components/Table';
 import type { ITableColumn } from './interfaces';
 import PokeSprite from './components/PokeSprite';
+import capitalize from 'lodash/capitalize';
 
 interface IPokemon {
   id: string;
@@ -38,16 +39,19 @@ export const columns: ITableColumn<IPokemon>[] = [
     name: 'Name',
     index: 2,
     field: 'name',
+    formatFunction: row => capitalize(row.name)
   },
   {
     name: 'Height',
     index: 4,
     field: 'height',
+    formatFunction: row => `${row.height / 10}m`
   },
   {
     name: 'Weight',
     index: 5,
     field: 'weight',
+    formatFunction: row => `${row.weight / 10}kg`
   },
     {
     name: 'Image',
