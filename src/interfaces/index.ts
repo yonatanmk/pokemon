@@ -1,13 +1,25 @@
-export interface IPokemon {
+export interface IPokemonRow {
   id: string;
   name: string;
   height: number;
   weight: number;
+  image: {
+    props: {
+      id: string;
+      name: string;
+    }
+  }
   abilities: {
-    name: string;
-    effect: string;
-    short_effect: string;
-  }[]
+    props: {
+      abilities: IPokemonAbility[]
+    }
+  }
+}
+
+export interface IPokemonAbility {
+  name: string;
+  effect: string;
+  short_effect: string;
 }
 
 export interface IPokemonQueryData {

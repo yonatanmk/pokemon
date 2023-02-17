@@ -1,18 +1,19 @@
 import { useEffect, useState } from 'react';
+import capitalize from 'lodash/capitalize';
 import { useQuery, gql } from "@apollo/client"
 import styles from './App.module.scss';
-import Table from './components/Table';
-import type { ITableColumn } from './interfaces';
-import PokeSprite from './components/PokeSprite';
-import capitalize from 'lodash/capitalize';
 
-import type { IPokemon, IPokemonQueryData } from './interfaces';
-import { formatPokemon } from './util';
+import PokeSpriteCell from './components/PokeSpriteCell';
+import AbilitiesCell from './components/AbilitiesCell';
+import Table from './components/Table';
+import { formatPokemonRow } from './util';
+import type { ITableColumn, IPokemonRow, IPokemonQueryData } from './interfaces';
+
 
 
 const GET_POKEMON = gql`
 query {
-  pokemon_v2_pokemon(limit: 20) {
+  pokemon_v2_pokemon(limit: 60) {
     id
     name
     height
@@ -32,7 +33,7 @@ query {
 }
 `;
 
-export const columns: ITableColumn<IPokemon>[] = [
+export const columns: ITableColumn<IPokemonRow>[] = [
   {
     name: 'Pokédex No.',
     index: 1,
@@ -61,19 +62,20 @@ export const columns: ITableColumn<IPokemon>[] = [
     index: 3,
     field: 'image',
     disableSort: true,
-    component: PokeSprite,
+    component: PokeSpriteCell,
   },
   {
     name: 'Abilities',
     index: 6,
-    field: 'image',
+    field: 'abilities',
     disableSort: true,
-    component: PokeSprite,
+    // formatFunction: row => row.abilities.map(ability => ability.name).join('\n')
+    component: AbilitiesCell,
   },
 ];
 
 function App() {
-  const [pokemon, setPokemon] = useState<IPokemon[]>([])
+  const [pokemonRows, setPokemonRows] = useState<IPokemonRow[]>([])
 
   const pokemonData = useQuery<IPokemonQueryData>(GET_POKEMON)
   // const items = useQuery(GET_ITEMS)
@@ -85,22 +87,22 @@ function App() {
   useEffect(() => {
     const {data, loading, error} = pokemonData;
     if (data && !loading && !error) {
-      setPokemon(data.pokemon_v2_pokemon.map( poke => formatPokemon(poke)))
+      setPokemonRows(data.pokemon_v2_pokemon.map( poke => formatPokemonRow(poke)))
     }
   }, [pokemonData])
 
   console.log(pokemonData)
-  console.log(pokemon)
+  console.log(pokemonRows)
 
-  const pokemonRows = pokemon.map(poke => ({
-    ...poke,
-    image: {
-      props: {
-        id: poke.id,
-        name: poke.name,
-      }
-    }
-  }))
+  // const pokemonRows = pokemon.map(poke => ({
+  //   ...poke,
+  //   image: {
+  //     props: {
+  //       id: poke.id,
+  //       name: poke.name,
+  //     }
+  //   }
+  // }))
   return (
     <div className={styles.App}>
       <p>Hello World</p>
