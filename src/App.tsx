@@ -118,7 +118,7 @@ function App() {
   useEffect(() => {
     if (pokemonData && !pokemonLoading && !pokemonError) {
       console.log(pokemonData)
-      const newRows = [...pokemonRows, ...pokemonData.pokemon_v2_pokemon.map( poke => formatPokemonRow(poke))]
+      const newRows = pokemonData.pokemon_v2_pokemon.map( poke => formatPokemonRow(poke));
       setPokemonRows(prev => page === 0 ? newRows : [...prev, ...newRows])
       setResultsCount(pokemonData.pokemon_v2_pokemon_aggregate.aggregate.count)
 
