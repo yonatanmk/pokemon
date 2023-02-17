@@ -16,12 +16,12 @@ function PokeSprite({ id, name }: IPokeSpriteProps) {
   const frontShinyUrl = `${baseShinyFrontImageUrl}${id}.png`
   const backShinyUrl = `${baseShinyBackImageUrl}${id}.png`
   return (
-    <>
+    <div className={style.PokeSprite}>
       <img src={frontUrl} alt={`${name} sprite`}></img>
-      <img src={backUrl} alt={`${name} sprite`}></img>
+      {/* <img src={backUrl} alt={`${name} sprite`}></img> */}
       <img src={frontShinyUrl} alt={`${name} sprite`}></img>
-      <img src={backShinyUrl} alt={`${name} sprite`}></img>
-    </>
+      {/* <img src={backShinyUrl} alt={`${name} sprite`}></img> */}
+    </div>
   )
   
 }

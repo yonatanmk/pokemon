@@ -1,7 +1,8 @@
 @import "./_palette";
 
 @mixin table-cell-padding {
-  padding: 16px 8px;
+  // padding: 16px 8px;
+  padding: 0px 8px;
 }
 
 @mixin input {

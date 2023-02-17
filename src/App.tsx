@@ -20,7 +20,7 @@ interface IPokemonQueryResp {
 
 const GET_POKEMON = gql`
 query {
-  pokemon_v2_pokemon(limit: 4) {
+  pokemon_v2_pokemon(limit: 20) {
     id
     name
     height
