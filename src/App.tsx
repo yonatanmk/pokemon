@@ -97,14 +97,6 @@ function App() {
     }
   }, [typeData])
 
-  useEffect(() => {
-    if (typeData && !typeLoading && !typeError) {
-      if (allTypes.length === 0) {
-        setAllTypes(typeData.pokemon_v2_pokemontype.map(formatPokemonType));
-      }
-    }
-  }, [typeData])
-
   const loadNextPage = () => {
     setPage(prev => prev + 1)
     pokemonRefetch({
