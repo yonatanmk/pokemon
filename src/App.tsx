@@ -30,19 +30,19 @@ export const columns: ITableColumn<IPokemonRow>[] = [
     field: 'height',
     formatFunction: row => `${row.height / 10}m`
   },
-  {
-    name: 'Weight',
-    index: 5,
-    field: 'weight',
-    formatFunction: row => `${row.weight / 10}kg`
-  },
   // {
-  //   name: 'Image',
-  //   index: 3,
-  //   field: 'image',
-  //   disableSort: true,
-  //   component: PokeSpriteCell,
+  //   name: 'Weight',
+  //   index: 5,
+  //   field: 'weight',
+  //   formatFunction: row => `${row.weight / 10}kg`
   // },
+  {
+    name: 'Image',
+    index: 3,
+    field: 'image',
+    disableSort: true,
+    component: PokeSpriteCell,
+  },
   {
     name: 'Abilities',
     index: 7,
@@ -78,7 +78,6 @@ function App() {
 
   useEffect(() => {
     if (pokemonData && !pokemonLoading && !pokemonError) {
-      console.log(pokemonData)
       const newRows = pokemonData.pokemon_v2_pokemon.map( poke => formatPokemonRow(poke));
       setPokemonRows(prev => page === 0 ? newRows : [...prev, ...newRows])
       setResultsCount(pokemonData.pokemon_v2_pokemon_aggregate.aggregate.count)

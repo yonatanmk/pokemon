@@ -6,8 +6,8 @@ export const PAGE_SIZE = 20;
 export const SORT_FIELDS = {
   ID: 'id' as ISortField,
   NAME: 'name' as ISortField,
-  // HEIGHT: 'height' as ISortField,
-  // WEIGHT: 'weight' as ISortField,
+  HEIGHT: 'height' as ISortField,
+  WEIGHT: 'weight' as ISortField,
 }
 
 export const formatPokemonRow = (pokemonData: IPokemonQueryDatum): IPokemonRow => {

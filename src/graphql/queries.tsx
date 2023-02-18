@@ -8,6 +8,7 @@ query Pokemon(
   $sortOrder: order_by,
   $sortById: Boolean!,
   $sortByName: Boolean!,
+  $sortByHeight: Boolean!,
 ) {
   pokemon_v2_pokemon(
     limit: ${PAGE_SIZE}, 
@@ -71,43 +72,14 @@ query Pokemon(
       }
     }
   }
-  pokemon_v2_pokemon_aggregate(where: { name: { _like: $nameSearch } }) {
-    aggregate {
-      count
-    }
-  }
-  pokemon_v2_pokemontype (distinct_on: type_id) {
-    type_id
-    pokemon_v2_type {
-      name
-    }
-  }
-}
-`;
-
-export const GET_POKEMON_TYPE_FILTER = gql`
-query Pokemon(
-  $offset: Int!,
-  $nameSearch: String,
-  $typesList: [Int],
-  $typesListLength: Int,
-) {
   pokemon_v2_pokemon(
     limit: ${PAGE_SIZE}, 
     offset: $offset, 
-    where: {
-      _and: [
-        { name: { _like: $nameSearch } }
-        {
-          pokemon_v2_pokemontypes: {
-            type_id: {
-              _in: $typesList
-            }
-          }
-        }
-      ]
+    where: { name: { _like: $nameSearch } }
+    order_by: {
+      height: $sortOrder
     }
-  ) {
+  ) @include(if: $sortByHeight ) {
     id
     name
     height
@@ -144,6 +116,66 @@ query Pokemon(
   }
 }
 `;
+
+// export const GET_POKEMON_TYPE_FILTER = gql`
+// query Pokemon(
+//   $offset: Int!,
+//   $nameSearch: String,
+//   $typesList: [Int],
+//   $typesListLength: Int,
+// ) {
+//   pokemon_v2_pokemon(
+//     limit: ${PAGE_SIZE}, 
+//     offset: $offset, 
+//     where: {
+//       _and: [
+//         { name: { _like: $nameSearch } }
+//         {
+//           pokemon_v2_pokemontypes: {
+//             type_id: {
+//               _in: $typesList
+//             }
+//           }
+//         }
+//       ]
+//     }
+//   ) {
+//     id
+//     name
+//     height
+//     weight
+//     pokemon_v2_pokemonabilities{
+//       id
+//       pokemon_v2_ability {
+//         id
+//         name
+//         pokemon_v2_abilityeffecttexts(limit: 1, where: { language_id:{ _eq: 9 } }) {
+//           short_effect
+//           effect
+//           language_id
+//         }
+//       }
+//     }
+//     pokemon_v2_pokemontypes {
+//       type_id
+//       pokemon_v2_type {
+//         name
+//       }
+//     }
+//   }
+//   pokemon_v2_pokemon_aggregate(where: { name: { _like: $nameSearch } }) {
+//     aggregate {
+//       count
+//     }
+//   }
+//   pokemon_v2_pokemontype (distinct_on: type_id) {
+//     type_id
+//     pokemon_v2_type {
+//       name
+//     }
+//   }
+// }
+// `;
 
 // export const GET_POKEMON_TYPE_FILTER = gql`
 // query Pokemon(

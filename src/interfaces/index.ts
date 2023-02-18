@@ -77,8 +77,7 @@ export interface IPokemonQueryAbilityText {
 }
 
 export type ISortOrder = 'asc' | 'desc';
-// export type ISortField = 'id' | 'name' | 'height' | 'weight';
-export type ISortField = 'id' | 'name';
+export type ISortField = 'id' | 'name' | 'height' | 'weight';
 
 export interface ITableColumn<T> {
   name: string;

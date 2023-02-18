@@ -21,6 +21,8 @@ sortField: ISortField;
       sortOrder,
       sortById: sortField === SORT_FIELDS.ID,
       sortByName: sortField === SORT_FIELDS.NAME,
+      sortByHeight: sortField === SORT_FIELDS.HEIGHT,
+      sortByWeight: sortField === SORT_FIELDS.WEIGHT,
     },
   })
 
@@ -38,6 +40,8 @@ sortField: ISortField;
       sortOrder,
       sortById: sortField === SORT_FIELDS.ID,
       sortByName: sortField === SORT_FIELDS.NAME,
+      sortByHeight: sortField === SORT_FIELDS.HEIGHT,
+      sortByWeight: sortField === SORT_FIELDS.WEIGHT,
     })
   }
 
