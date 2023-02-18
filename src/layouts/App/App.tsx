@@ -4,16 +4,16 @@ import debounce from 'lodash/debounce';
 import styles from './App.module.scss';
 import { BsSearch } from "react-icons/bs";
 import { useQuery } from "@apollo/client"
-import PokeSpriteCell from './components/PokeSpriteCell';
-import AbilitiesCell from './components/AbilitiesCell';
-import TypesCell from './components/TypesCell';
-import Table from './components/Table';
-import Loading from './components/Loading';
+import PokeSpriteCell from '../../components/PokeSpriteCell';
+import AbilitiesCell from '../../components/AbilitiesCell';
+import TypesCell from '../../components/TypesCell';
+import Table from '../../components/Table';
+import Loading from '../../components/Loading';
 import { formatPokemonRow, formatPokemonType, PAGE_SIZE, SORT_FIELDS, range } from './util';
 import type { ITableColumn, IPokemonRow, IType, ISortOrder, ISortField, ITypeQueryData } from './interfaces';
-import { SORT_ORDERS } from './components/Table/util';
-import { usePokemonQuery } from './hooks';
-import { GET_POKEMON_TYPES } from './graphql/queries';
+import { SORT_ORDERS } from '../../components/Table/util';
+import { usePokemonQuery } from '../../hooks';
+import { GET_POKEMON_TYPES } from '../../graphql/queries';
 
 export const columns: ITableColumn<IPokemonRow>[] = [
   {
