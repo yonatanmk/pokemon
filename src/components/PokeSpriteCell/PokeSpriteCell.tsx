@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import style from './PokeSpriteCell.module.scss'
 
 const baseFrontImageUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/`
@@ -27,6 +27,11 @@ function PokeSprite({ id, name }: IPokeSpriteCellProps) {
       setShinyHidden(true)
     }
   }
+
+  useEffect(() => {
+    setHidden(false)
+    setShinyHidden(false)
+  }, [id])
 
   return (
     <div className={style.PokeSpriteCell}>

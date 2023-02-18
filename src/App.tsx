@@ -80,18 +80,8 @@ function App() {
     nameSearch: `%%`,
     sortOrder: SORT_ORDERS.ASC,
     sortField: SORT_FIELDS.ID,
-    // selectedTypes: selectedTypes.length == 0 ? allTypes.map(type => type.id) : selectedTypes,
     selectedTypes: range(1, 18)
   });
-
-  // const { data: pokemonData, loading: pokemonLoading, error: pokemonError, refetch: pokemonRefetch } = usePokemonQuery({
-  //   offset: page * PAGE_SIZE,
-  //   nameSearch: `%${search}%`,
-  //   sortOrder,
-  //   sortField,
-  //   // selectedTypes: selectedTypes.length == 0 ? allTypes.map(type => type.id) : selectedTypes,
-  //   selectedTypes: selectedTypes.length == 0 ? range(1, 18) : selectedTypes,
-  // });
 
   useEffect(() => {
     if (pokemonData && !pokemonLoading && !pokemonError) {
@@ -116,21 +106,6 @@ function App() {
     }
   }, [typeData])
 
-  // useEffect(() => {
-  //   console.log('REFETCH WATCHER')
-  //   console.log({
-  //     selectedTypes: selectedTypes.length == 0 ? allTypes.map(type => type.id) : selectedTypes,
-  //     sortField, sortOrder, search,
-  //   })
-  //   pokemonRefetch({ 
-  //     offset: 0,
-  //     nameSearch: `%${search}%`,
-  //     sortOrder,
-  //     sortField,
-  //     selectedTypes: selectedTypes.length == 0 ? allTypes.map(type => type.id) : selectedTypes,
-  //   })
-  // }, [selectedTypes, sortField, sortOrder, search])
-
   const loadNextPage = () => {
     setPage(prev => prev + 1)
     pokemonRefetch({
@@ -144,11 +119,6 @@ function App() {
 
   const handleSearchChange = (e: React.FormEvent<HTMLInputElement>) => {
     setSearchInput(e.currentTarget.value);
-    // console.log(debounce)
-    // // debounce(() => {
-    // //   console.log('DEBOUNCE')
-    // //   setSearch(e.currentTarget.value)
-    // // }, 1000)()
     debouncedSetSearch(e.currentTarget.value)
   }
 
