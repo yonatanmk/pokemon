@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import startCase from 'lodash/startCase';
+import debounce from 'lodash/debounce';
 import styles from './App.module.scss';
 import { BsSearch } from "react-icons/bs";
 import { useQuery } from "@apollo/client"
@@ -64,6 +65,7 @@ export const columns: ITableColumn<IPokemonRow>[] = [
 function App() {
   const [pokemonRows, setPokemonRows] = useState<IPokemonRow[]>([]);
   const [page, setPage] = useState<number>(0);
+  const [searchInput, setSearchInput] = useState('');
   const [search, setSearch] = useState('');
   const [resultsCount, setResultsCount] = useState(0);
   const [allTypes, setAllTypes] = useState<IType[]>([]);
@@ -75,14 +77,22 @@ function App() {
 
   const { data: pokemonData, loading: pokemonLoading, error: pokemonError, refetch: pokemonRefetch } = usePokemonQuery({
     offset: page * PAGE_SIZE,
-    nameSearch: `%%`,
+    nameSearch: `%${search}%`,
     sortOrder,
     sortField,
-    selectedTypes: range(1, 18)
+    // selectedTypes: selectedTypes.length == 0 ? allTypes.map(type => type.id) : selectedTypes,
+    selectedTypes: selectedTypes.length == 0 ? range(1, 18) : selectedTypes,
   });
 
   useEffect(() => {
     if (pokemonData && !pokemonLoading && !pokemonError) {
+      console.log('LOAD pokemonData')
+      console.log({
+        pokemonData,
+        search,
+        sortField,
+        sortOrder
+      })
       const newRows = pokemonData.pokemon_v2_pokemon.map( poke => formatPokemonRow(poke));
       setPokemonRows(prev => page === 0 ? newRows : [...prev, ...newRows])
       setResultsCount(pokemonData.pokemon_v2_pokemon_aggregate.aggregate.count)
@@ -97,6 +107,21 @@ function App() {
     }
   }, [typeData])
 
+  // useEffect(() => {
+  //   console.log('REFETCH WATCHER')
+  //   console.log({
+  //     selectedTypes: selectedTypes.length == 0 ? allTypes.map(type => type.id) : selectedTypes,
+  //     sortField, sortOrder, search,
+  //   })
+  //   pokemonRefetch({ 
+  //     offset: 0,
+  //     nameSearch: `%${search}%`,
+  //     sortOrder,
+  //     sortField,
+  //     selectedTypes: selectedTypes.length == 0 ? allTypes.map(type => type.id) : selectedTypes,
+  //   })
+  // }, [selectedTypes, sortField, sortOrder, search])
+
   const loadNextPage = () => {
     setPage(prev => prev + 1)
     pokemonRefetch({
@@ -109,24 +134,41 @@ function App() {
   }
 
   const handleSearchChange = (e: React.FormEvent<HTMLInputElement>) => {
-    setSearch(e.currentTarget.value);
+    setSearchInput(e.currentTarget.value);
+    // console.log(debounce)
+    // // debounce(() => {
+    // //   console.log('DEBOUNCE')
+    // //   setSearch(e.currentTarget.value)
+    // // }, 1000)()
+    debouncedSetSearch(e.currentTarget.value)
   }
 
-  const onSearch = () => {
-    console.log('onSearch')
-    console.log(selectedTypes)
-    setPage(0)
-    setPokemonRows([])
-    pokemonRefetch({ 
-      offset: 0,
-      nameSearch: `%${search}%`,
-      sortOrder,
-      sortField,
-      selectedTypes: selectedTypes.length == 0 ? allTypes.map(type => type.id) : selectedTypes,
-    })
-  }
+  const debouncedSetSearch = debounce(
+    (newSearch: string) => {
+      setSearch(newSearch)
+      pokemonRefetch({ 
+        offset: 0,
+        nameSearch: `%${newSearch}%`,
+        sortOrder,
+        sortField,
+        selectedTypes: selectedTypes.length == 0 ? allTypes.map(type => type.id) : selectedTypes,
+      })
+    }, 500)
+
+  // const onSearch = () => {
+  //   setPage(0)
+  //   setPokemonRows([])
+  //   pokemonRefetch({ 
+  //     offset: 0,
+  //     nameSearch: `%${search}%`,
+  //     sortOrder,
+  //     sortField,
+  //     selectedTypes: selectedTypes.length == 0 ? allTypes.map(type => type.id) : selectedTypes,
+  //   })
+  // }
 
   const toggleTypeSelected = (typeId: number) => {
+    console.log('toggleTypeSelected')
     const newSelectedTypes = selectedTypes.includes(typeId) ? selectedTypes.filter(id => id !== typeId) : [...selectedTypes, typeId]
     setSelectedTypes(newSelectedTypes)
     pokemonRefetch({ 
@@ -152,11 +194,13 @@ function App() {
         </div>
           <div className={styles.App__Sidebar__Row}>
             <div className={styles.App__Sidebar__Search}>
-              <input id="people-search" type="text" value={search} onChange={handleSearchChange} placeholder="Search Name" />
+              <input id="people-search" type="text" value={searchInput} onChange={handleSearchChange} placeholder="Search Name" />
               <BsSearch />
             </div>
-            <button className={styles.App__Sidebar__SearchButton} onClick={onSearch}>Search</button>
+            {/* <button className={styles.App__Sidebar__SearchButton} onClick={onSearch}>Search</button> */}
           </div>
+          <p>Search Input: {searchInput}</p>
+          <p>Search: {search}</p>
           <div className={styles["App__Sidebar__Row--label"]}>
             <p>Types</p>
           </div>
