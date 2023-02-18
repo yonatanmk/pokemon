@@ -1,9 +1,9 @@
 import { gql } from "@apollo/client"
-import { PAGE_SIZE } from '../util';
 
 export const GET_POKEMON = gql`
 query Pokemon(
   $offset: Int!,
+  $limit: Int!,
   $nameSearch: String,
   $sortOrder: order_by,
   $sortById: Boolean!,
@@ -12,7 +12,7 @@ query Pokemon(
   $selectedTypes: [Int],
 ) {
   pokemon_v2_pokemon(
-    limit: ${PAGE_SIZE}, 
+    limit: $limit, 
     offset: $offset, 
     where: {
       _and: [
@@ -48,7 +48,7 @@ query Pokemon(
     }
   }
   pokemon_v2_pokemon(
-    limit: ${PAGE_SIZE}, 
+    limit: $limit, 
     offset: $offset, 
     where: {
       _and: [
@@ -84,7 +84,7 @@ query Pokemon(
     }
   }
   pokemon_v2_pokemon(
-    limit: ${PAGE_SIZE}, 
+    limit: $limit, 
     offset: $offset, 
     where: {
       _and: [
@@ -119,7 +119,14 @@ query Pokemon(
       }
     }
   }
-  pokemon_v2_pokemon_aggregate(where: { name: { _like: $nameSearch } }) {
+  pokemon_v2_pokemon_aggregate(
+    where: {
+      _and: [
+        { name: { _like: $nameSearch } },
+        { pokemon_v2_pokemontypes: { type_id: { _in: $selectedTypes } } }
+      ]
+    }
+  ) {
     aggregate {
       count
     }

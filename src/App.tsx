@@ -94,8 +94,8 @@ function App() {
         sortOrder
       })
       const newRows = pokemonData.pokemon_v2_pokemon.map( poke => formatPokemonRow(poke));
-      setPokemonRows(prev => page === 0 ? newRows : [...prev, ...newRows])
-      setResultsCount(pokemonData.pokemon_v2_pokemon_aggregate.aggregate.count)
+      setPokemonRows(prev => page === 0 ? newRows : [...prev, ...newRows]);
+      setResultsCount(pokemonData.pokemon_v2_pokemon_aggregate.aggregate.count);
     }
   }, [pokemonData])
 
@@ -126,6 +126,8 @@ function App() {
   const debouncedSetSearch = debounce(
     (newSearch: string) => {
       setSearch(newSearch)
+      setPage(0)
+      setPokemonRows([])
       pokemonRefetch({ 
         offset: 0,
         nameSearch: `%${newSearch}%`,
@@ -135,29 +137,19 @@ function App() {
       })
     }, 500)
 
-  // const onSearch = () => {
-  //   setPage(0)
-  //   setPokemonRows([])
-  //   pokemonRefetch({ 
-  //     offset: 0,
-  //     nameSearch: `%${search}%`,
-  //     sortOrder,
-  //     sortField,
-  //     selectedTypes: selectedTypes.length == 0 ? allTypes.map(type => type.id) : selectedTypes,
-  //   })
-  // }
-
   const toggleTypeSelected = (typeId: number) => {
     console.log('toggleTypeSelected')
     const newSelectedTypes = selectedTypes.includes(typeId) ? selectedTypes.filter(id => id !== typeId) : [...selectedTypes, typeId]
     setSelectedTypes(newSelectedTypes)
+    setPage(0)
+    setPokemonRows([])
     pokemonRefetch({ 
       offset: 0, 
       nameSearch: `%${search}%`,
       sortOrder,
       sortField,
       selectedTypes: newSelectedTypes.length == 0 ? allTypes.map(type => type.id) : newSelectedTypes,
-    }) // TODO FILTER BY TYPE
+    })
   }
 
   const onSortUpdate = ({
@@ -169,8 +161,10 @@ function App() {
   }) => {
     if (newSortField) setSortField(newSortField);
     if (newSortOrder) setSortOrder(newSortOrder);
+    setPokemonRows([])
     pokemonRefetch({ 
       offset: 0,
+      limit: PAGE_SIZE + page * PAGE_SIZE,
       nameSearch: `%${search}%`,
       sortOrder: newSortOrder || sortOrder,
       sortField: newSortField|| sortField,
@@ -179,8 +173,6 @@ function App() {
   }
 
   const onLastPage = pokemonRows.length === resultsCount;
-
-  // console.log({pokemonLoading, typeLoading})
 
   return (
     <div className={styles.App}>

@@ -2,7 +2,7 @@ import capitalize from 'lodash/capitalize';
 import uniqBy from 'lodash/uniqBy';
 import type { IPokemonRow, IPokemonQueryDatum, ITypeQueryDatum, IType, ISortField, IPokemonQueryAbility } from '../interfaces';
 
-export const PAGE_SIZE = 20;
+export const PAGE_SIZE = 50;
 
 export const SORT_FIELDS = {
   ID: 'id' as ISortField,
