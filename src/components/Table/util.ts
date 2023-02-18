@@ -1,9 +1,9 @@
 import includes from 'lodash/includes';
-import type { IFilter } from '../../interfaces';
+import type { IFilter, ISortOrder } from '../../interfaces';
 
 export const SORT_ORDERS = Object.freeze({
-  ASC: 'asc',
-  DESC: 'desc',
+  ASC: 'asc' as ISortOrder,
+  DESC: 'desc'as ISortOrder,
 } as const);
 
 export const FILTER_TYPES = Object.freeze({

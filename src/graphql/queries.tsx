@@ -50,7 +50,12 @@ query Pokemon(
   pokemon_v2_pokemon(
     limit: ${PAGE_SIZE}, 
     offset: $offset, 
-    where: { name: { _like: $nameSearch } }
+    where: {
+      _and: [
+        { name: { _like: $nameSearch } },
+        { pokemon_v2_pokemontypes: { type_id: { _in: $selectedTypes } } }
+      ]
+    }
     order_by: {
       name: $sortOrder
     }
@@ -81,7 +86,12 @@ query Pokemon(
   pokemon_v2_pokemon(
     limit: ${PAGE_SIZE}, 
     offset: $offset, 
-    where: { name: { _like: $nameSearch } }
+    where: {
+      _and: [
+        { name: { _like: $nameSearch } },
+        { pokemon_v2_pokemontypes: { type_id: { _in: $selectedTypes } } }
+      ]
+    }
     order_by: {
       height: $sortOrder
     }

@@ -76,13 +76,22 @@ function App() {
   const { data: typeData, loading: typeLoading, error: typeError } = useQuery<ITypeQueryData>(GET_POKEMON_TYPES);
 
   const { data: pokemonData, loading: pokemonLoading, error: pokemonError, refetch: pokemonRefetch } = usePokemonQuery({
-    offset: page * PAGE_SIZE,
-    nameSearch: `%${search}%`,
-    sortOrder,
-    sortField,
+    offset: 0,
+    nameSearch: `%%`,
+    sortOrder: SORT_ORDERS.ASC,
+    sortField: SORT_FIELDS.ID,
     // selectedTypes: selectedTypes.length == 0 ? allTypes.map(type => type.id) : selectedTypes,
-    selectedTypes: selectedTypes.length == 0 ? range(1, 18) : selectedTypes,
+    selectedTypes: range(1, 18)
   });
+
+  // const { data: pokemonData, loading: pokemonLoading, error: pokemonError, refetch: pokemonRefetch } = usePokemonQuery({
+  //   offset: page * PAGE_SIZE,
+  //   nameSearch: `%${search}%`,
+  //   sortOrder,
+  //   sortField,
+  //   // selectedTypes: selectedTypes.length == 0 ? allTypes.map(type => type.id) : selectedTypes,
+  //   selectedTypes: selectedTypes.length == 0 ? range(1, 18) : selectedTypes,
+  // });
 
   useEffect(() => {
     if (pokemonData && !pokemonLoading && !pokemonError) {
@@ -180,6 +189,24 @@ function App() {
     }) // TODO FILTER BY TYPE
   }
 
+  const onSortUpdate = ({
+    newSortField,
+    newSortOrder,
+  }: {
+    newSortField?: ISortField,
+    newSortOrder?: ISortOrder
+  }) => {
+    if (newSortField) setSortField(newSortField);
+    if (newSortOrder) setSortOrder(newSortOrder);
+    pokemonRefetch({ 
+      offset: 0,
+      nameSearch: `%${search}%`,
+      sortOrder: newSortOrder || sortOrder,
+      sortField: newSortField|| sortField,
+      selectedTypes: selectedTypes.length == 0 ? allTypes.map(type => type.id) : selectedTypes,
+    })
+  }
+
   const onLastPage = pokemonRows.length === resultsCount;
 
   return (
@@ -228,8 +255,8 @@ function App() {
             defaultSortPredicate="id" 
             backupSortPredicate="id"
             filters={[]}
-            setSortFieldOverride={setSortField}
-            setSortOrderOverride={setSortOrder}
+            setSortFieldOverride={(val: ISortField) => onSortUpdate({ newSortField: val })}
+            setSortOrderOverride={(val: ISortOrder) => onSortUpdate({ newSortOrder: val })}
             sortOrderOverride={sortOrder}
             sortFieldOverride={sortField}
           />

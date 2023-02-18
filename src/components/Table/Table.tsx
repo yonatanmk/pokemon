@@ -19,8 +19,9 @@ interface ITableProps<T> {
   id: string | number;
   sortOrderOverride?: ISortOrder;
   sortFieldOverride?: ISortField;
-  setSortFieldOverride?: Dispatch<SetStateAction<ISortField>>;
-  setSortOrderOverride?: Dispatch<SetStateAction<ISortOrder>>;
+  // setSortFieldOverride?: Dispatch<SetStateAction<ISortField>>;
+  setSortFieldOverride?: (arg0: ISortField) => void;
+  setSortOrderOverride?: (arg0: ISortOrder) => void;
 }
 
 function Table<T extends object>({ 

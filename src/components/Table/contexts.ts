@@ -6,6 +6,6 @@ import type { ISortOrder, ISortField } from '../../interfaces';
 export const TableSortContext = createContext({
   sortPredicate: 'name',
   sortOrder: SORT_ORDERS.ASC as ISortOrder,
-  setSortPredicate:(() => null) as React.Dispatch<React.SetStateAction<ISortField>>,
-  setSortOrder: (() => null) as React.Dispatch<React.SetStateAction<ISortOrder>>,
+  setSortPredicate:(() => null) as (arg0: ISortField) => void,
+  setSortOrder: (() => null) as (arg0: ISortOrder) => void,
 });
