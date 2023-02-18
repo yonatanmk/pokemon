@@ -4,6 +4,7 @@ import { BsArrowUp, BsArrowDown } from "react-icons/bs";
 import classnames from "classnames";
 import { SORT_ORDERS } from '../util';
 import { TableSortContext } from '../contexts';
+import type { ISortField } from '../../../interfaces';
 
 export type IHeaderCellProps = {
   name: string;
@@ -28,7 +29,7 @@ function HeaderCell({ name, field, disableSort }: IHeaderCellProps) {
     } else if (isSorted) {
       toggleSortOrder()
     } else {
-      setSortPredicate(field)
+      setSortPredicate(field as ISortField)
       setSortOrder(SORT_ORDERS.ASC)
     }
   }

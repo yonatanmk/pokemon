@@ -5,12 +5,49 @@ export const GET_POKEMON = gql`
 query Pokemon(
   $offset: Int!,
   $nameSearch: String,
+  $sortOrder: order_by,
+  $sortById: Boolean!,
+  $sortByName: Boolean!,
 ) {
   pokemon_v2_pokemon(
     limit: ${PAGE_SIZE}, 
     offset: $offset, 
     where: { name: { _like: $nameSearch } }
-  ) {
+    order_by: {
+      id: $sortOrder
+    }
+  ) @include(if: $sortById ) {
+    id
+    name
+    height
+    weight
+    pokemon_v2_pokemonabilities{
+      id
+      pokemon_v2_ability {
+        id
+        name
+        pokemon_v2_abilityeffecttexts(limit: 1, where: { language_id:{ _eq: 9 } }) {
+          short_effect
+          effect
+          language_id
+        }
+      }
+    }
+    pokemon_v2_pokemontypes {
+      type_id
+      pokemon_v2_type {
+        name
+      }
+    }
+  }
+  pokemon_v2_pokemon(
+    limit: ${PAGE_SIZE}, 
+    offset: $offset, 
+    where: { name: { _like: $nameSearch } }
+    order_by: {
+      name: $sortOrder
+    }
+  ) @include(if: $sortByName ) {
     id
     name
     height

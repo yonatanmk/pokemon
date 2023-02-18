@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
-import capitalize from 'lodash/capitalize';
-import { useQuery } from "@apollo/client"
+import startCase from 'lodash/startCase';
 import styles from './App.module.scss';
 import { BsSearch } from "react-icons/bs";
 
@@ -8,9 +7,10 @@ import PokeSpriteCell from './components/PokeSpriteCell';
 import AbilitiesCell from './components/AbilitiesCell';
 import TypesCell from './components/TypesCell';
 import Table from './components/Table';
-import { formatPokemonRow, formatPokemonType, PAGE_SIZE } from './util';
-import type { ITableColumn, IPokemonRow, IPokemonQueryData, IType } from './interfaces';
-import { GET_POKEMON, GET_POKEMON_TYPE_FILTER } from './graphql/queries'
+import { formatPokemonRow, formatPokemonType, PAGE_SIZE, SORT_FIELDS } from './util';
+import type { ITableColumn, IPokemonRow, IType, ISortOrder, ISortField } from './interfaces';
+import { SORT_ORDERS } from './components/Table/util';
+import { usePokemonQuery } from './hooks';
 
 export const columns: ITableColumn<IPokemonRow>[] = [
   {
@@ -22,7 +22,7 @@ export const columns: ITableColumn<IPokemonRow>[] = [
     name: 'Name',
     index: 2,
     field: 'name',
-    formatFunction: row => capitalize(row.name)
+    formatFunction: row => startCase(row.name.split('-').join(' '))
   },
   {
     name: 'Height',
@@ -36,13 +36,13 @@ export const columns: ITableColumn<IPokemonRow>[] = [
     field: 'weight',
     formatFunction: row => `${row.weight / 10}kg`
   },
-  {
-    name: 'Image',
-    index: 3,
-    field: 'image',
-    disableSort: true,
-    component: PokeSpriteCell,
-  },
+  // {
+  //   name: 'Image',
+  //   index: 3,
+  //   field: 'image',
+  //   disableSort: true,
+  //   component: PokeSpriteCell,
+  // },
   {
     name: 'Abilities',
     index: 7,
@@ -66,12 +66,14 @@ function App() {
   const [resultsCount, setResultsCount] = useState(0)
   const [allTypes, setAllTypes] = useState<IType[]>([])
   const [selectedTypes, setSelectedTypes] = useState<number[]>([])
+  const [sortOrder, setSortOrder] = useState<ISortOrder>(SORT_ORDERS.ASC)
+  const [sortField, setSortField] = useState<ISortField>(SORT_FIELDS.ID)
 
-  const { data: pokemonData, loading: pokemonLoading, error: pokemonError, refetch: pokemonRefetch } = useQuery<IPokemonQueryData>(GET_POKEMON, {
-    variables: { 
-      offset: page * PAGE_SIZE,
-      nameSearch: `%%`
-    },
+  const { data: pokemonData, loading: pokemonLoading, error: pokemonError, refetch: pokemonRefetch } = usePokemonQuery({
+    offset: page * PAGE_SIZE,
+    nameSearch: `%${search}%`,
+    sortOrder,
+    sortField,
   })
 
   useEffect(() => {
@@ -87,10 +89,22 @@ function App() {
     }
   }, [pokemonData])
 
+  useEffect(() => {
+    pokemonRefetch({
+      offset: 0,
+      nameSearch: `%${search}%`,
+      sortField,
+      sortOrder,
+    })
+  }, [sortOrder, sortField])
+
   const loadNextPage = () => {
     setPage(prev => prev + 1)
     pokemonRefetch({
       offset: (page + 1) * PAGE_SIZE,
+      nameSearch: `%${search}%`,
+      sortOrder,
+      sortField,
     })
   }
 
@@ -101,7 +115,12 @@ function App() {
   const onSearch = () => {
     setPage(0)
     setPokemonRows([])
-    pokemonRefetch({ offset: 0, nameSearch: `%${search}%` })
+    pokemonRefetch({ 
+      offset: 0,
+      nameSearch: `%${search}%`,
+      sortOrder,
+      sortField,
+    })
   }
 
   const toggleTypeSelected = (typeId: number) => {
@@ -110,7 +129,12 @@ function App() {
     } else {
       setSelectedTypes(prev => [...prev, typeId])
     }
-    pokemonRefetch({ offset: 0, nameSearch: `%${search}%` })
+    pokemonRefetch({ 
+      offset: 0, 
+      nameSearch: `%${search}%`,
+      sortOrder,
+      sortField
+    }) // TODO FILTER BY TYPE
   }
 
   const onLastPage = pokemonRows.length === resultsCount;
@@ -148,6 +172,7 @@ function App() {
               </div>
             ))}
           </div>
+          <p>{sortField} : {sortOrder}</p>
         </div>
         <div className={styles.App__Content}>
           <Table
@@ -157,11 +182,14 @@ function App() {
             defaultSortPredicate="id" 
             backupSortPredicate="id"
             filters={[]}
+            setSortFieldOverride={setSortField}
+            setSortOrderOverride={setSortOrder}
+            sortOrderOverride={sortOrder}
+            sortFieldOverride={sortField}
           />
           {!onLastPage && !pokemonLoading && <button className={styles.loadmore} onClick={loadNextPage}>Load More</button>}
         </div>
       </div>
-
     </div>
   );
 }

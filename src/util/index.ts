@@ -1,7 +1,14 @@
 import capitalize from 'lodash/capitalize';
-import type { IPokemonRow, IPokemonQueryDatum, ITypeQueryDatum, IType } from '../interfaces';
+import type { IPokemonRow, IPokemonQueryDatum, ITypeQueryDatum, IType, ISortField } from '../interfaces';
 
 export const PAGE_SIZE = 20;
+
+export const SORT_FIELDS = {
+  ID: 'id' as ISortField,
+  NAME: 'name' as ISortField,
+  // HEIGHT: 'height' as ISortField,
+  // WEIGHT: 'weight' as ISortField,
+}
 
 export const formatPokemonRow = (pokemonData: IPokemonQueryDatum): IPokemonRow => {
   const { id, name, height, weight, pokemon_v2_pokemonabilities, pokemon_v2_pokemontypes } = pokemonData;
