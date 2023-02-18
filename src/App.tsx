@@ -31,12 +31,13 @@ export const columns: ITableColumn<IPokemonRow>[] = [
     field: 'height',
     formatFunction: row => `${row.height / 10}m`
   },
-  // {
-  //   name: 'Weight',
-  //   index: 5,
-  //   field: 'weight',
-  //   formatFunction: row => `${row.weight / 10}kg`
-  // },
+  {
+    name: 'Weight',
+    index: 5,
+    field: 'weight',
+    disableSort: true,
+    formatFunction: row => `${row.weight / 10}kg`
+  },
   {
     name: 'Image',
     index: 3,
@@ -46,7 +47,7 @@ export const columns: ITableColumn<IPokemonRow>[] = [
   },
   {
     name: 'Abilities',
-    index: 7,
+    index: 8,
     field: 'abilities',
     disableSort: true,
     component: AbilitiesCell,

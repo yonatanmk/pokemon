@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import style from './PokeSpriteCell.module.scss'
 
 const baseFrontImageUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/`
@@ -11,16 +12,28 @@ export type IPokeSpriteCellProps = {
 }
 
 function PokeSprite({ id, name }: IPokeSpriteCellProps) {
+  const [hidden, setHidden] = useState(false)
+  const [shinyHidden, setShinyHidden] = useState(false)
   const frontUrl = `${baseFrontImageUrl}${id}.png`
   // const backUrl = `${baseBackImageUrl}${id}.png`
   const frontShinyUrl = `${baseShinyFrontImageUrl}${id}.png`
   // const backShinyUrl = `${baseShinyBackImageUrl}${id}.png`
+
+  const onError = (e: any) => {
+    const { src } = e.target;
+    if (src === frontUrl) {
+      setHidden(true)
+    } else if (src === frontShinyUrl) {
+      setShinyHidden(true)
+    }
+  }
+
   return (
     <div className={style.PokeSpriteCell}>
-      <img src={frontUrl} alt={`${name} sprite`}></img>
-      {/* <img src={backUrl} alt={`${name} sprite`}></img> */}
-      <img src={frontShinyUrl} alt={`${name} sprite`}></img>
-      {/* <img src={backShinyUrl} alt={`${name} sprite`}></img> */}
+      {!hidden && <img src={frontUrl} alt={`${name} sprite`} onError={onError} />}
+      {/* <img src={backUrl} alt={`${name} sprite`} /> */}
+      {!shinyHidden && <img src={frontShinyUrl} alt={`${name} sprite`} onError={onError} />}
+      {/* <img src={backShinyUrl} alt={`${name} sprite`} /> */}
     </div>
   )
   
