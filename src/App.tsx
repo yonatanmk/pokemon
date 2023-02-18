@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import capitalize from 'lodash/capitalize';
-import { useQuery, gql } from "@apollo/client"
+import { useQuery } from "@apollo/client"
 import styles from './App.module.scss';
 import { BsSearch } from "react-icons/bs";
 
@@ -8,50 +8,9 @@ import PokeSpriteCell from './components/PokeSpriteCell';
 import AbilitiesCell from './components/AbilitiesCell';
 import TypesCell from './components/TypesCell';
 import Table from './components/Table';
-import { formatPokemonRow, formatPokemonType } from './util';
+import { formatPokemonRow, formatPokemonType, PAGE_SIZE } from './util';
 import type { ITableColumn, IPokemonRow, IPokemonQueryData, IType } from './interfaces';
-
-const PAGE_SIZE = 20;
-
-const GET_POKEMON = gql`
-query Pokemon($offset: Int!, $nameSearch: String) {
-  pokemon_v2_pokemon(limit: ${PAGE_SIZE}, offset: $offset, where: { name: { _like: $nameSearch } }) {
-    id
-    name
-    height
-    weight
-    pokemon_v2_pokemonabilities{
-      id
-      pokemon_v2_ability {
-        id
-        name
-        pokemon_v2_abilityeffecttexts(limit: 1, where: { language_id:{ _eq: 9 } }) {
-          short_effect
-          effect
-          language_id
-        }
-      }
-    }
-    pokemon_v2_pokemontypes {
-      type_id
-      pokemon_v2_type {
-        name
-      }
-    }
-  }
-  pokemon_v2_pokemon_aggregate(where: { name: { _like: $nameSearch } }) {
-    aggregate {
-      count
-    }
-  }
-  pokemon_v2_pokemontype (distinct_on: type_id) {
-    type_id
-    pokemon_v2_type {
-      name
-    }
-  }
-}
-`;
+import { GET_POKEMON, GET_POKEMON_TYPE_FILTER } from './graphql/queries'
 
 export const columns: ITableColumn<IPokemonRow>[] = [
   {
@@ -151,6 +110,7 @@ function App() {
     } else {
       setSelectedTypes(prev => [...prev, typeId])
     }
+    pokemonRefetch({ offset: 0, nameSearch: `%${search}%` })
   }
 
   const onLastPage = pokemonRows.length === resultsCount;
