@@ -8,6 +8,7 @@ import PokeSpriteCell from './components/PokeSpriteCell';
 import AbilitiesCell from './components/AbilitiesCell';
 import TypesCell from './components/TypesCell';
 import Table from './components/Table';
+import Loading from './components/Loading';
 import { formatPokemonRow, formatPokemonType, PAGE_SIZE, SORT_FIELDS, range } from './util';
 import type { ITableColumn, IPokemonRow, IType, ISortOrder, ISortField, ITypeQueryData } from './interfaces';
 import { SORT_ORDERS } from './components/Table/util';
@@ -179,6 +180,8 @@ function App() {
 
   const onLastPage = pokemonRows.length === resultsCount;
 
+  // console.log({pokemonLoading, typeLoading})
+
   return (
     <div className={styles.App}>
       <div className={styles.Header}>
@@ -216,6 +219,8 @@ function App() {
           </div>
           {/* <p>{sortField} : {sortOrder}</p> */}
           {/* {selectedTypes.map(type => <p key={type}>{type}</p>)} */}
+          {/* <p>pokemonLoading: {`${pokemonLoading}`}</p> */}
+          {/* <p>typeLoading: {`${typeLoading}`}</p> */}
         </div>
         <div className={styles.App__Content}>
           <Table
@@ -230,6 +235,7 @@ function App() {
             onSort={onSortUpdate}
           />
           {!onLastPage && !pokemonLoading && <button className={styles.loadmore} onClick={loadNextPage}>Load More</button>}
+          <Loading display={pokemonLoading || typeLoading}/>
         </div>
       </div>
     </div>

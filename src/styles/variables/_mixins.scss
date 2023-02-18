@@ -15,13 +15,13 @@
 @mixin button {
   outline: none;
   color: #fff;
-  background-color: #EF5350;
+  background-color: $pokedex-red;
   border: 1px solid transparent;
   cursor: pointer;
   text-transform: uppercase;
   white-space: normal;
   font-weight: 700;
   &:hover {
-    background-color: #C62828;
+    background-color: $pokedex-red-dark;
   }
 }

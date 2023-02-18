@@ -1,8 +1,6 @@
 @import "./styles/variables/_palette";
+@import "./styles/variables/_sizes";
 @import "./styles/variables/_mixins";
-
-$header-height: 4.5rem;
-$sidebar-padding: 1rem;
 
 .App {
   text-align: center;
@@ -12,7 +10,7 @@ $sidebar-padding: 1rem;
   }
 
   &__Sidebar {
-    width: 20rem;
+    width: $sidebar-width;
     min-width: 10rem;
     border-right: 1px solid black;
     background-color: $table-header-gray;
@@ -63,6 +61,7 @@ $sidebar-padding: 1rem;
     flex: 1;
     height: calc(100vh - $header-height);
     overflow-y: scroll;
+    position: relative;
   }
 
   .loadmore {
@@ -82,7 +81,7 @@ $sidebar-padding: 1rem;
 
 .Header {
   color: #fff;
-  background-color: #EF5350;
+  background-color: $pokedex-red;
   height: $header-height;
   display: flex;
   justify-content: center;
