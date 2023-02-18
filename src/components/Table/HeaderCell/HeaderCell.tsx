@@ -8,19 +8,23 @@ import type { ISortField } from '../../../interfaces';
 
 export type IHeaderCellProps = {
   name: string;
-  field: string;
+  field: ISortField;
   disableSort: boolean;
 };
 
 function HeaderCell({ name, field, disableSort }: IHeaderCellProps) {
-  const { sortPredicate, setSortPredicate, sortOrder, setSortOrder } = useContext(TableSortContext);
+  const { sortPredicate, setSortPredicate, sortOrder, setSortOrder, overrideSortMethod, onSort } = useContext(TableSortContext);
 
   const isSorted = field === sortPredicate;
   const ArrowIcon = sortOrder === SORT_ORDERS.ASC ? BsArrowDown : BsArrowUp;
 
-
   const toggleSortOrder = () => {
-    setSortOrder(sortOrder === SORT_ORDERS.ASC ? SORT_ORDERS.DESC : SORT_ORDERS.ASC)
+    const newOrder = sortOrder === SORT_ORDERS.ASC ? SORT_ORDERS.DESC : SORT_ORDERS.ASC
+    if (overrideSortMethod) {
+      onSort({ sortField: field, sortOrder: newOrder })
+    } else {
+      setSortOrder(newOrder)
+    }
   }
 
   const onHeaderClick = () => {
@@ -29,8 +33,12 @@ function HeaderCell({ name, field, disableSort }: IHeaderCellProps) {
     } else if (isSorted) {
       toggleSortOrder()
     } else {
-      setSortPredicate(field as ISortField)
-      setSortOrder(SORT_ORDERS.ASC)
+      if (overrideSortMethod) {
+        onSort({ sortField: field, sortOrder: SORT_ORDERS.ASC })
+      } else {
+        setSortPredicate(field as ISortField)
+        setSortOrder(SORT_ORDERS.ASC)
+      }
     }
   }
 

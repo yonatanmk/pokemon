@@ -190,11 +190,11 @@ function App() {
   }
 
   const onSortUpdate = ({
-    newSortField,
-    newSortOrder,
+    sortField: newSortField,
+    sortOrder: newSortOrder,
   }: {
-    newSortField?: ISortField,
-    newSortOrder?: ISortOrder
+    sortField: ISortField,
+    sortOrder: ISortOrder
   }) => {
     if (newSortField) setSortField(newSortField);
     if (newSortOrder) setSortOrder(newSortOrder);
@@ -255,10 +255,9 @@ function App() {
             defaultSortPredicate="id" 
             backupSortPredicate="id"
             filters={[]}
-            setSortFieldOverride={(val: ISortField) => onSortUpdate({ newSortField: val })}
-            setSortOrderOverride={(val: ISortOrder) => onSortUpdate({ newSortOrder: val })}
             sortOrderOverride={sortOrder}
             sortFieldOverride={sortField}
+            onSort={onSortUpdate}
           />
           {!onLastPage && !pokemonLoading && <button className={styles.loadmore} onClick={loadNextPage}>Load More</button>}
         </div>

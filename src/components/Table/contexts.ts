@@ -8,4 +8,6 @@ export const TableSortContext = createContext({
   sortOrder: SORT_ORDERS.ASC as ISortOrder,
   setSortPredicate:(() => null) as (arg0: ISortField) => void,
   setSortOrder: (() => null) as (arg0: ISortOrder) => void,
+  onSort: (() => null) as (arg0: { sortField: ISortField, sortOrder: ISortOrder }) => void,
+  overrideSortMethod: false,
 });

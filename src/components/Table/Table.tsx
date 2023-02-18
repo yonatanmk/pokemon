@@ -10,7 +10,6 @@ import { TableSortContext } from './contexts';
 
 interface ITableProps<T> {
   className?: string;
-  // rows: T[];
   rows: any[];
   columns: ITableColumn<T>[];
   defaultSortPredicate: ISortField;
@@ -19,9 +18,7 @@ interface ITableProps<T> {
   id: string | number;
   sortOrderOverride?: ISortOrder;
   sortFieldOverride?: ISortField;
-  // setSortFieldOverride?: Dispatch<SetStateAction<ISortField>>;
-  setSortFieldOverride?: (arg0: ISortField) => void;
-  setSortOrderOverride?: (arg0: ISortOrder) => void;
+  onSort?: (arg0: { sortField: ISortField, sortOrder: ISortOrder }) => void;
 }
 
 function Table<T extends object>({ 
@@ -33,8 +30,7 @@ function Table<T extends object>({
   filters,
   sortOrderOverride,
   sortFieldOverride,
-  setSortFieldOverride,
-  setSortOrderOverride,
+  onSort,
 }: ITableProps<T>) {
   const [sortPredicate, setSortPredicate] = useState(defaultSortPredicate);
   const [sortOrder, setSortOrder] = useState(SORT_ORDERS.ASC as ISortOrder);
@@ -53,8 +49,6 @@ function Table<T extends object>({
 
   const trueSortPredicate = sortFieldOverride || sortPredicate;
   const trueSortOrder = sortOrderOverride || sortOrder;
-  const trueSetSortPredicate = setSortFieldOverride || setSortPredicate;
-  const trueSetSortOrder = setSortOrderOverride || setSortOrder;
 
   const headerRow = columns.reduce((agg: Partial<any>, col) => {
     return {
@@ -79,9 +73,11 @@ function Table<T extends object>({
       <thead>
         <TableSortContext.Provider value={{ 
           sortPredicate: trueSortPredicate,
-          setSortPredicate: trueSetSortPredicate, 
+          setSortPredicate, 
           sortOrder: trueSortOrder, 
-          setSortOrder: trueSetSortOrder 
+          setSortOrder, 
+          onSort: (onSort || (() => setSortOrder)),
+          overrideSortMethod: !!onSort,
         }}>
           <Row row={headerRow} columns={headerColumns} isHeader/>
         </TableSortContext.Provider>
