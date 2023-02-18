@@ -8,11 +8,13 @@ export const usePokemonQuery = ({
   nameSearch,
   sortOrder,
   sortField,
+  selectedTypes,
 }: {
 offset: number;
 nameSearch: string;
 sortOrder: ISortOrder;
 sortField: ISortField;
+selectedTypes: number[];
 }) => {
   const getPokemonQuery = useQuery<IPokemonQueryData>(GET_POKEMON, {
     variables: { 
@@ -23,17 +25,17 @@ sortField: ISortField;
       sortByName: sortField === SORT_FIELDS.NAME,
       sortByHeight: sortField === SORT_FIELDS.HEIGHT,
       sortByWeight: sortField === SORT_FIELDS.WEIGHT,
+      selectedTypes,
     },
   })
 
-  const refetch = ({ offset, nameSearch, sortOrder, sortField }: {
+  const refetch = ({ offset, nameSearch, sortOrder, sortField, selectedTypes }: {
     offset: number;
     nameSearch: string;
     sortOrder: ISortOrder;
     sortField: ISortField;
-
+    selectedTypes: number[];
   }) => {
-
     getPokemonQuery.refetch({
       offset,
       nameSearch, 
@@ -42,6 +44,7 @@ sortField: ISortField;
       sortByName: sortField === SORT_FIELDS.NAME,
       sortByHeight: sortField === SORT_FIELDS.HEIGHT,
       sortByWeight: sortField === SORT_FIELDS.WEIGHT,
+      selectedTypes,
     })
   }
 

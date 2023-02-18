@@ -47,3 +47,12 @@ export const formatPokemonType = (type: ITypeQueryDatum): IType => ({
   id: type.type_id,
   name: capitalize(type.pokemon_v2_type.name),
 });
+
+export const  range = (min: number, max: number) => {
+  const len = max - min + 1;
+  const arr = new Array(len);
+  for (let i=0; i<len; i++) {
+    arr[i] = min + i;
+  }
+  return arr;
+}

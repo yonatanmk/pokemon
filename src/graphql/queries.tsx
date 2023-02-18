@@ -9,11 +9,17 @@ query Pokemon(
   $sortById: Boolean!,
   $sortByName: Boolean!,
   $sortByHeight: Boolean!,
+  $selectedTypes: [Int],
 ) {
   pokemon_v2_pokemon(
     limit: ${PAGE_SIZE}, 
     offset: $offset, 
-    where: { name: { _like: $nameSearch } }
+    where: {
+      _and: [
+        { name: { _like: $nameSearch } },
+        { pokemon_v2_pokemontypes: { type_id: { _in: $selectedTypes } } }
+      ]
+    }
     order_by: {
       id: $sortOrder
     }
@@ -108,6 +114,11 @@ query Pokemon(
       count
     }
   }
+}
+`;
+
+export const GET_POKEMON_TYPES = gql`
+query PokemonTypes{
   pokemon_v2_pokemontype (distinct_on: type_id) {
     type_id
     pokemon_v2_type {

@@ -31,6 +31,9 @@ export interface IPokemonAbility {
 export interface IPokemonQueryData {
   pokemon_v2_pokemon: IPokemonQueryDatum[];
   pokemon_v2_pokemon_aggregate: ICountQueryDatum;
+}
+
+export interface ITypeQueryData {
   pokemon_v2_pokemontype: ITypeQueryDatum[];
 }
 

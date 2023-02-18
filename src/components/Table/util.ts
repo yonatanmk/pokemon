@@ -31,3 +31,4 @@ export const filterRows = (rows: any, filters: IFilter[]) => {
 const searchMatch = (value: string, search: string): boolean => {
   return !!value && value.toLowerCase().indexOf(search) > -1;
 };
+
