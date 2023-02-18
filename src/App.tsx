@@ -62,16 +62,16 @@ export const columns: ITableColumn<IPokemonRow>[] = [
 ];
 
 function App() {
-  const [pokemonRows, setPokemonRows] = useState<IPokemonRow[]>([])
-  const [page, setPage] = useState<number>(0)
-  const [search, setSearch] = useState('')
-  const [resultsCount, setResultsCount] = useState(0)
-  const [allTypes, setAllTypes] = useState<IType[]>([])
-  const [selectedTypes, setSelectedTypes] = useState<number[]>([])
-  const [sortOrder, setSortOrder] = useState<ISortOrder>(SORT_ORDERS.ASC)
-  const [sortField, setSortField] = useState<ISortField>(SORT_FIELDS.ID)
+  const [pokemonRows, setPokemonRows] = useState<IPokemonRow[]>([]);
+  const [page, setPage] = useState<number>(0);
+  const [search, setSearch] = useState('');
+  const [resultsCount, setResultsCount] = useState(0);
+  const [allTypes, setAllTypes] = useState<IType[]>([]);
+  const [selectedTypes, setSelectedTypes] = useState<number[]>([]);
+  const [sortOrder, setSortOrder] = useState<ISortOrder>(SORT_ORDERS.ASC);
+  const [sortField, setSortField] = useState<ISortField>(SORT_FIELDS.ID);
 
-  const { data: typeData, loading: typeLoading, error: typeError } = useQuery<ITypeQueryData>(GET_POKEMON_TYPES)
+  const { data: typeData, loading: typeLoading, error: typeError } = useQuery<ITypeQueryData>(GET_POKEMON_TYPES);
 
   const { data: pokemonData, loading: pokemonLoading, error: pokemonError, refetch: pokemonRefetch } = usePokemonQuery({
     offset: page * PAGE_SIZE,
@@ -79,7 +79,7 @@ function App() {
     sortOrder,
     sortField,
     selectedTypes: range(1, 18)
-  })
+  });
 
   useEffect(() => {
     if (pokemonData && !pokemonLoading && !pokemonError) {
