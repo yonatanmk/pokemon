@@ -1,4 +1,6 @@
 import classnames from "classnames";
+import { useContext } from 'react';
+import { TableSortContext } from '../contexts';
 import styles from "./Cell.module.scss";
 import type { ITableCellComponent, ITableColumn } from '../../../interfaces';
 
@@ -11,6 +13,7 @@ type ICellProps = {
   row: any;
 };
 function Cell({ fieldName, row, column, className: customClass, component, isHeader = false }: ICellProps) {
+  const { onRowClick } = useContext(TableSortContext);
   const field = row[fieldName]
   const TableCell = isHeader ? 'th' : 'td';
   const className = classnames(styles.cell, customClass, { [styles.cell__header]: isHeader });
@@ -27,8 +30,16 @@ function Cell({ fieldName, row, column, className: customClass, component, isHea
     const text = column.formatFunction ? column.formatFunction(row) : field as  string | number;
     innerComponent = <p>{text}</p>;
   }
+
+  const onCellClick = () => {
+    console.log('onCellClick')
+    if (!isHeader) {
+      console.log('!isHeader')
+      onRowClick(row)
+    }
+  }
   return (
-    <TableCell className={className}>
+    <TableCell className={className} onClick={onCellClick}>
       {innerComponent}
     </TableCell>
   );

@@ -10,4 +10,5 @@ export const TableSortContext = createContext({
   setSortOrder: (() => null) as (arg0: ISortOrder) => void,
   onSort: (() => null) as (arg0: { sortField: ISortField, sortOrder: ISortOrder }) => void,
   overrideSortMethod: false,
+  onRowClick: (() => null) as (arg0: any) => void,
 });

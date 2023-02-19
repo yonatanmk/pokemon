@@ -16,10 +16,7 @@ export const SORT_FIELDS = {
 
 export const formatPokemonRow = (pokemonData: IPokemonQueryDatum): IPokemonRow => {
   const { id, name, height, weight, pokemon_v2_pokemonabilities, pokemon_v2_pokemontypes, pokemon_v2_pokemonsprites } = pokemonData;
-  console.log(pokemon_v2_pokemonsprites)
-
   const spritesJSON = pokemon_v2_pokemonsprites && pokemon_v2_pokemonsprites ? JSON.parse(pokemon_v2_pokemonsprites[0].sprites) : {};
-  console.log(spritesJSON)
   return {
     id,
     name:startCase(name.split('-').join(' ')),

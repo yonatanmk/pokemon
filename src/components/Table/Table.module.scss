@@ -2,5 +2,10 @@
 
 .table {
   width: 100%;
-  border-collapse: collapse
+  border-collapse: collapse;
+
+  tr:hover td {
+    background-color: #dae1f7;
+    cursor: pointer;
+  }
 }

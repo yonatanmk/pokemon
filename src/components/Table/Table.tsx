@@ -19,6 +19,7 @@ interface ITableProps<T> {
   sortOrderOverride?: ISortOrder;
   sortFieldOverride?: ISortField;
   onSort?: (arg0: { sortField: ISortField, sortOrder: ISortOrder }) => void;
+  onRowSelect: (arg0: any) => void;
 }
 
 function Table<T extends object>({ 
@@ -31,6 +32,7 @@ function Table<T extends object>({
   sortOrderOverride,
   sortFieldOverride,
   onSort,
+  onRowSelect = () => {/*default to empty function*/},
 }: ITableProps<T>) {
   const [sortPredicate, setSortPredicate] = useState(defaultSortPredicate);
   const [sortOrder, setSortOrder] = useState(SORT_ORDERS.ASC as ISortOrder);
@@ -70,21 +72,22 @@ function Table<T extends object>({
 
   return (
     <table className={classnames(styles.table, className)}>
-      <thead>
-        <TableSortContext.Provider value={{ 
-          sortPredicate: trueSortPredicate,
-          setSortPredicate, 
-          sortOrder: trueSortOrder, 
-          setSortOrder, 
-          onSort: (onSort || (() => setSortOrder)),
-          overrideSortMethod: !!onSort,
-        }}>
+      <TableSortContext.Provider value={{ 
+        sortPredicate: trueSortPredicate,
+        setSortPredicate, 
+        sortOrder: trueSortOrder, 
+        setSortOrder, 
+        onSort: (onSort || (() => setSortOrder)),
+        overrideSortMethod: !!onSort,
+        onRowClick: onRowSelect,
+      }}>
+        <thead>
           <Row row={headerRow} columns={headerColumns} isHeader/>
-        </TableSortContext.Provider>
-      </thead>
-      <tbody>
-        {sortedRows.map((row: any, index : number) => <Row key={index} row={row} columns={sortedColumns} />)}
-      </tbody>
+        </thead>
+        <tbody>
+          {sortedRows.map((row: any, index : number) => <Row key={index} row={row} columns={sortedColumns} />)}
+        </tbody>
+      </TableSortContext.Provider>
     </table>
   );
 }

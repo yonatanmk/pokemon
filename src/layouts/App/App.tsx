@@ -176,6 +176,10 @@ function App() {
     })
   }
 
+  const onPokemonSelect = (pokemon: IPokemonRow) => {
+    console.log(pokemon)
+  }
+
   const onLastPage = pokemonRows.length === resultsCount;
 
   return (
@@ -247,6 +251,7 @@ function App() {
             sortOrderOverride={sortOrder}
             sortFieldOverride={sortField}
             onSort={onSortUpdate}
+            onRowSelect={onPokemonSelect}
           />
           {!onLastPage && !pokemonLoading && !!pokemonRows[0] && <button className={styles.loadmore} onClick={loadNextPage}>Load More</button>}
           <Loading display={pokemonLoading || typeLoading}/>
