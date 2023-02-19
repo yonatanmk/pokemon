@@ -1,12 +1,13 @@
 # Pokédex App
 
-This project is a Pokédex Single Page Application built in React for the assignment:
+This project is a Pokédex Single Page Application built in React for the assignment\
 https://github.com/symmetry-systems/joining-symmetry/blob/main/assignments.md
 
-It uses Apollo Client to query the PokeAPI GraphQL Endpoint Beta for data
+It uses Apollo Client to query the PokeAPI GraphQL Endpoint Beta for data\
 https://beta.pokeapi.co/graphql/console/
 
-You can view a deployed version of the app at https://ymk-pokedex.netlify.app/
+You can view a deployed version of the app at\
+https://ymk-pokedex.netlify.app/
 
 ## Available Scripts
 
