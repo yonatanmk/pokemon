@@ -1,4 +1,11 @@
 .PokeSpriteCell {
   display: flex;
   justify-content: center;
+  align-items: center;
+
+  &__emptySVG {
+    height: 32px;
+    width: 32px;
+    margin: 1rem;
+  }
 }

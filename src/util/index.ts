@@ -4,8 +4,9 @@ import uniqBy from 'lodash/uniqBy';
 import type { IPokemonRow, IPokemonQueryDatum, ITypeQueryDatum, IType, ISortField, IPokemonQueryAbility } from '../interfaces';
 
 export const PAGE_SIZE = 50;
-export const BASE_SPRITE_URL = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/`
-export const BASE_SHINY_SPRITE_URL = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/`
+export const BASE_SPRITE_URL = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/`;
+export const BASE_SHINY_SPRITE_URL = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/`;
+export const BASE_IMAGE_URL = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/`;
 
 export const SORT_FIELDS = {
   ID: 'id' as ISortField,
@@ -22,6 +23,7 @@ export const formatPokemonRow = (pokemonData: IPokemonQueryDatum): IPokemonRow =
     name:startCase(name.split('-').join(' ')),
     height,
     weight,
+    imageUrl: spritesJSON?.other?.['official-artwork']?.front_default ? `${BASE_IMAGE_URL}${id}.png` : null,
     image: {
       props: {
         id,

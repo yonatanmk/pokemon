@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import style from './PokeSpriteCell.module.scss'
+import { BsQuestionLg } from "react-icons/bs";
 
 // export const baseFrontImageUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/`
 // // const baseBackImageUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/`
@@ -35,12 +36,15 @@ function PokeSprite({ id, name, defaultUrl, shinyUrl }: IPokeSpriteCellProps) {
     setShinyHidden(false)
   }, [id])
 
+  const noImage = hidden || !defaultUrl;
+  const noShinyImage = shinyHidden || !shinyUrl;
+
   return (
     <div className={style.PokeSpriteCell}>
-      {!hidden && defaultUrl && <img src={defaultUrl} alt={`${name} sprite`} onError={onError} />}
-      {/* <img src={backUrl} alt={`${name} sprite`} /> */}
-      {!shinyHidden && shinyUrl && <img src={shinyUrl} alt={`${name} sprite`} onError={onError} />}
-      {/* <img src={backShinyUrl} alt={`${name} sprite`} /> */}
+      {!noImage && <img src={defaultUrl} alt={`table-${name}-sprite`} onError={onError} />}
+      {noImage && <BsQuestionLg className={style.PokeSpriteCell__emptySVG}/>}
+      {!noShinyImage && <img src={shinyUrl} alt={`table-${name}-shiny-sprite`} onError={onError} />}
+      {noShinyImage && <BsQuestionLg className={style.PokeSpriteCell__emptySVG}/>}
     </div>
   )
   

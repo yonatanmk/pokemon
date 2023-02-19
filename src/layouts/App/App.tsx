@@ -249,6 +249,7 @@ function App() {
           <div className={styles.InfoBlock}>
             {selectedPokemon && <div className={styles.InfoBlock__Content}>
               <h1 className={styles.InfoBlock__Title}>{selectedPokemon.name} #{selectedPokemon.id}</h1>
+             {selectedPokemon.imageUrl && <img className={styles.InfoBlock__Image} src={selectedPokemon.imageUrl} alt={`sidebar-${selectedPokemon.name}-sprite`} />}
             </div>}
           </div>
           {/* <p>{sortField} : {sortOrder}</p> */}

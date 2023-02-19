@@ -3,6 +3,7 @@ export interface IPokemonRow {
   name: string;
   height: number;
   weight: number;
+  imageUrl: string | null;
   image: {
     props: {
       id: string;
