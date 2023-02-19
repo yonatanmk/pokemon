@@ -34,7 +34,7 @@ function PokeSprite({ id, name }: IPokeSpriteCellProps) {
   }, [id])
 
 
-  asdf
+  asd
 
   return (
     <div className={style.PokeSpriteCell}>
