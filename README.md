@@ -9,6 +9,25 @@ https://beta.pokeapi.co/graphql/console/
 You can view a deployed version of the app at\
 https://ymk-pokedex.netlify.app/
 
+
+When you first load the app you will see a paginated list of Pokémon initially sorted by Pokédex entry number. The current page size is 50 entries. You can load more entries by clicking the "Load More" button at the button of the Pokémon list. The "Load More" button will only appear if there are more pages of Pokémon available.
+
+The Pokémon list displays in order the Pokémon's Pokédex entry number, Name, Game Sprites for both normal and shiny variants if available, Height, Weight, Types, and Abilities. You can hover over the ability names to see a tooltip with an explanation of the ability effect if it is available in the API.
+
+The Pokémon list can be sorted by Pokédex entry number, Name, and Height by clicking the table headers. Sorting can be done in both ascending and descending order as indicated by the arrow icon in the header. Sorting can be done concurrently with filtering.
+
+At the top of the left sidebar you will see filter options for the Pokémon list along with the current number of matching Pokédex entries for the currently selected filters. By default, no filters are selected, so the matching number will reflect all Pokémon entries available in the API.
+
+You can filter the Pokémon list via either a name search, or by Pokémon type, or both. Filters work concurrently and filtered results can be sorted as well. When some filters are active, the match number at the top of the sidebar will reflect how many Pokémon available in the API match the current filters. All filter results may not be rendered in the Pokémon list initially as the filtered results are also paginated, but you can load more filter result pages via the "Load More" button.
+
+You can click on an entry row in the Pokémon list to display more information on that pokemon in the bottom half of the side bar. Currently this info panel displays the Pokémon name, entry number, official artwork, and flavor text.
+
+## Getting Started
+
+1. Clone the repository locally
+2. From the root of the directory run `npm i` or `yarn install`
+3. From the root of the directory run `npm run start` or `yarn run start`
+
 ## Available Scripts
 
 In the project directory, you can run:
