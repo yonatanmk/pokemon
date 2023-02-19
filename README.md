@@ -20,7 +20,7 @@ At the top of the left sidebar you will see filter options for the Pokémon list
 
 You can filter the Pokémon list via either a name search, or by Pokémon type, or both. Filters work concurrently and filtered results can be sorted as well. When some filters are active, the match number at the top of the sidebar will reflect how many Pokémon available in the API match the current filters. All filter results may not be rendered in the Pokémon list initially as the filtered results are also paginated, but you can load more filter result pages via the "Load More" button.
 
-You can click on an entry row in the Pokémon list to display more information on that pokemon in the bottom half of the side bar. Currently this info panel displays the Pokémon name, entry number, official artwork, and flavor text.
+You can click on an entry row in the Pokémon list to display more information on that pokemon in the bottom half of the side bar. Currently this info panel displays the Pokémon name, entry number, official artwork, and flavor text. Many of the later Pokémon entries in the Pokédex do not have flavor text and are therefore "REDACTED".
 
 ## Getting Started
 
