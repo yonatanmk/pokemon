@@ -203,7 +203,7 @@ function App() {
       <div className={styles.Header}>
         <h1>Pokédex</h1>
       </div>
-      <div className={styles.App__FilterBar}>
+      {/* <div className={styles.App__FilterBar}>
         <h1 className={styles.App__FilterBar__count}>{resultsCount} Matching Pokémon</h1>
         <div className={styles.App__FilterBar__filters}>
           <div className={styles.Search}>
@@ -215,12 +215,12 @@ function App() {
             <BsSearch />
           </div>
         </div>
-      </div>
+      </div> */}
       <div className={styles.App__Body}>
         <div className={styles.App__Sidebar}>
-        <div className={styles["App__Sidebar__Row--label"]}>
-          <p>{resultsCount} Matching Pokémon</p>
-        </div>
+          <div className={classnames(styles["App__Sidebar__Row--head"], styles["App__Sidebar__Row--label"])}>
+            <p>{resultsCount} Matching Pokémon</p>
+          </div>
           <div className={styles.App__Sidebar__Row}>
             <div className={styles.App__Sidebar__Search}>
               <input id="people-search" type="text" value={searchInput} onChange={handleSearchChange} placeholder="Search Name" />
