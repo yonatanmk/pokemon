@@ -44,4 +44,7 @@ function PokeSprite({ id, name }: IPokeSpriteCellProps) {
   
 }
 
+
+
+
 export default PokeSprite;
