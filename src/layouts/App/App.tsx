@@ -75,7 +75,9 @@ function App() {
   const [sortOrder, setSortOrder] = useState<ISortOrder>(SORT_ORDERS.ASC);
   const [sortField, setSortField] = useState<ISortField>(SORT_FIELDS.ID);
   const [selectedPokemon, setSelectedPokemon] = useState<IPokemonRow | null>(null)
+  const [loading, setLoading] = useState(false);
 
+  // TODO REMOVE QUERY
   const { data: typeData, loading: typeLoading, error: typeError } = useQuery<ITypeQueryData>(GET_POKEMON_TYPES);
 
   const { data: pokemonData, loading: pokemonLoading, error: pokemonError, refetch: pokemonRefetch } = usePokemonQuery({
@@ -85,6 +87,8 @@ function App() {
     sortField: SORT_FIELDS.ID,
     selectedTypes: range(1, 18)
   });
+
+  const isLoading = loading || typeLoading || pokemonLoading
 
   useEffect(() => {
     if (pokemonData && !pokemonLoading && !pokemonError) {
@@ -98,6 +102,7 @@ function App() {
       const newRows = pokemonData.pokemon_v2_pokemon.map( poke => formatPokemonRow(poke));
       setPokemonRows(prev => page === 0 ? newRows : [...prev, ...newRows]);
       setResultsCount(pokemonData.pokemon_v2_pokemon_aggregate.aggregate.count);
+      setLoading(false)
     }
   }, [pokemonData])
 
@@ -109,14 +114,44 @@ function App() {
     }
   }, [typeData])
 
+  const refetch = ({
+    reset = false,
+    offset: offsetArg = 0,
+    limit,
+    nameSearch: nameSearchArg,
+    sortOrder: sortOrderArg,
+    sortField: sortFieldArg,
+    selectedTypes: selectedTypesArg,
+  }: {
+    reset?: boolean;
+    offset?: number;
+    limit?: number;
+    nameSearch?: string;
+    sortOrder?: ISortOrder;
+    sortField?: ISortField;
+    selectedTypes?: number[];
+  }) => {
+    setLoading(true)
+    if (reset) {
+      setPage(0)
+      setPokemonRows([])
+    }
+
+    pokemonRefetch({ 
+      offset: offsetArg || 0,
+      limit,
+      nameSearch: `%${nameSearchArg || search}%`,
+      sortOrder: sortOrderArg || sortOrder,
+      sortField: sortFieldArg || sortField,
+      selectedTypes: selectedTypesArg || (selectedTypes.length == 0 ? allTypes.map(type => type.id) : selectedTypes),
+    })
+
+  }
+
   const loadNextPage = () => {
     setPage(prev => prev + 1)
-    pokemonRefetch({
+    refetch({
       offset: (page + 1) * PAGE_SIZE,
-      nameSearch: `%${search}%`,
-      sortOrder,
-      sortField,
-      selectedTypes: selectedTypes.length == 0 ? allTypes.map(type => type.id) : selectedTypes,
     })
   }
 
@@ -128,14 +163,9 @@ function App() {
   const debouncedSetSearch = debounce(
     (newSearch: string) => {
       setSearch(newSearch)
-      setPage(0)
-      setPokemonRows([])
-      pokemonRefetch({ 
-        offset: 0,
+      refetch({
+        reset: true,
         nameSearch: `%${newSearch}%`,
-        sortOrder,
-        sortField,
-        selectedTypes: selectedTypes.length == 0 ? allTypes.map(type => type.id) : selectedTypes,
       })
     }, 500)
 
@@ -143,13 +173,8 @@ function App() {
     console.log('toggleTypeSelected')
     const newSelectedTypes = selectedTypes.includes(typeId) ? selectedTypes.filter(id => id !== typeId) : [...selectedTypes, typeId]
     setSelectedTypes(newSelectedTypes)
-    setPage(0)
-    setPokemonRows([])
-    pokemonRefetch({ 
-      offset: 0, 
-      nameSearch: `%${search}%`,
-      sortOrder,
-      sortField,
+    refetch({
+      reset: true,
       selectedTypes: newSelectedTypes.length == 0 ? allTypes.map(type => type.id) : newSelectedTypes,
     })
   }
@@ -164,13 +189,10 @@ function App() {
     if (newSortField) setSortField(newSortField);
     if (newSortOrder) setSortOrder(newSortOrder);
     setPokemonRows([])
-    pokemonRefetch({ 
-      offset: 0,
+    refetch({
       limit: PAGE_SIZE + page * PAGE_SIZE,
-      nameSearch: `%${search}%`,
       sortOrder: newSortOrder || sortOrder,
       sortField: newSortField|| sortField,
-      selectedTypes: selectedTypes.length == 0 ? allTypes.map(type => type.id) : selectedTypes,
     })
   }
 
@@ -248,7 +270,7 @@ function App() {
             onRowSelect={setSelectedPokemon}
           />
           {!onLastPage && !pokemonLoading && !!pokemonRows[0] && <button className={styles.loadmore} onClick={loadNextPage}>Load More</button>}
-          <Loading display={pokemonLoading || typeLoading}/>
+          <Loading display={isLoading}/>
         </div>
       </div>
     </div>
