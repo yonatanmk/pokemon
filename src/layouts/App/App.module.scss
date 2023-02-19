@@ -102,7 +102,8 @@
 
   &__Content {
     flex: 1;
-    height: calc(100vh - $header-height - $filter-bar-height);
+    // height: calc(100vh - $header-height - $filter-bar-height);
+    height: calc(100vh - $header-height);
     overflow-y: scroll;
     position: relative;
   }
@@ -158,4 +159,8 @@
 
 .InfoBlock {
   border-top: 1px solid black;
+
+  &__Title {
+    font-size: 1.5rem;
+  }
 }

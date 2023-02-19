@@ -223,7 +223,7 @@ function App() {
           </div>
           <div className={styles.App__Sidebar__Row}>
             <div className={styles.App__Sidebar__Search}>
-              <input id="people-search" type="text" value={searchInput} onChange={handleSearchChange} placeholder="Search Name" />
+              <input id="people-search" type="text" value={searchInput} onChange={handleSearchChange} placeholder="Search Pokémon Name" />
               <BsSearch />
             </div>
             {/* <button className={styles.App__Sidebar__SearchButton} onClick={onSearch}>Search</button> */}
@@ -248,7 +248,7 @@ function App() {
           </div>
           <div className={styles.InfoBlock}>
             {selectedPokemon && <div className={styles.InfoBlock__Content}>
-              <h1>{selectedPokemon.name} #{selectedPokemon.id}</h1>
+              <h1 className={styles.InfoBlock__Title}>{selectedPokemon.name} #{selectedPokemon.id}</h1>
             </div>}
           </div>
           {/* <p>{sortField} : {sortOrder}</p> */}
