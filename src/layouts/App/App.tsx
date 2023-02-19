@@ -4,6 +4,7 @@ import debounce from 'lodash/debounce';
 import styles from './App.module.scss';
 import { BsSearch } from "react-icons/bs";
 import { useQuery } from "@apollo/client"
+import classnames from 'classnames';
 import PokeSpriteCell from '../../components/PokeSpriteCell';
 import AbilitiesCell from '../../components/AbilitiesCell';
 import TypesCell from '../../components/TypesCell';
@@ -73,6 +74,9 @@ function App() {
   const [selectedTypes, setSelectedTypes] = useState<number[]>([]);
   const [sortOrder, setSortOrder] = useState<ISortOrder>(SORT_ORDERS.ASC);
   const [sortField, setSortField] = useState<ISortField>(SORT_FIELDS.ID);
+  // const [selectedPokemon, setSelectedPokemon] = useState<IPokemonRow | null>(null)
+
+  const selectedPokemon = pokemonRows[0]
 
   const { data: typeData, loading: typeLoading, error: typeError } = useQuery<ITypeQueryData>(GET_POKEMON_TYPES);
 
@@ -204,12 +208,12 @@ function App() {
             </div>
             {/* <button className={styles.App__Sidebar__SearchButton} onClick={onSearch}>Search</button> */}
           </div>
-          <p>Search Input: {searchInput}</p>
-          <p>Search: {search}</p>
+          {/* <p>Search Input: {searchInput}</p>
+          <p>Search: {search}</p> */}
           <div className={styles["App__Sidebar__Row--label"]}>
             <p>Types</p>
           </div>
-          <div className={styles.App__Sidebar__Row}>
+          <div className={classnames(styles.App__Sidebar__Row, styles.CheckboxList)}>
             {allTypes && allTypes.map(type => (
               <div className={styles.Checkbox} key={type.id}>
                 <input 
@@ -221,6 +225,11 @@ function App() {
                 <label className={styles.Checkbox__label}>{type.name}</label>
               </div>
             ))}
+          </div>
+          <div className={styles.InfoBlock}>
+            {selectedPokemon && <div className={styles.InfoBlock__Content}>
+              <h1>{selectedPokemon.name} #{selectedPokemon.id}</h1>
+            </div>}
           </div>
           {/* <p>{sortField} : {sortOrder}</p> */}
           {/* {selectedTypes.map(type => <p key={type}>{type}</p>)} */}

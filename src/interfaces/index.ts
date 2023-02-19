@@ -7,6 +7,8 @@ export interface IPokemonRow {
     props: {
       id: string;
       name: string;
+      defaultUrl: string | null;
+      shinyUrl: string | null;
     }
   }
   abilities: {
@@ -42,8 +44,9 @@ export interface IPokemonQueryDatum {
   name: string;
   height: number;
   weight: number;
-  pokemon_v2_pokemonabilities: IPokemonQueryAbility[]
-  pokemon_v2_pokemontypes: ITypeQueryDatum[]
+  pokemon_v2_pokemonabilities: IPokemonQueryAbility[];
+  pokemon_v2_pokemontypes: ITypeQueryDatum[];
+  pokemon_v2_pokemonsprites: { sprites: string }[]
 }
 
 export interface ICountQueryDatum {

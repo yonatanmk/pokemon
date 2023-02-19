@@ -1,8 +1,11 @@
 import capitalize from 'lodash/capitalize';
+import startCase from 'lodash/startCase';
 import uniqBy from 'lodash/uniqBy';
 import type { IPokemonRow, IPokemonQueryDatum, ITypeQueryDatum, IType, ISortField, IPokemonQueryAbility } from '../interfaces';
 
 export const PAGE_SIZE = 50;
+export const BASE_SPRITE_URL = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/`
+export const BASE_SHINY_SPRITE_URL = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/`
 
 export const SORT_FIELDS = {
   ID: 'id' as ISortField,
@@ -12,16 +15,22 @@ export const SORT_FIELDS = {
 }
 
 export const formatPokemonRow = (pokemonData: IPokemonQueryDatum): IPokemonRow => {
-  const { id, name, height, weight, pokemon_v2_pokemonabilities, pokemon_v2_pokemontypes } = pokemonData;
+  const { id, name, height, weight, pokemon_v2_pokemonabilities, pokemon_v2_pokemontypes, pokemon_v2_pokemonsprites } = pokemonData;
+  console.log(pokemon_v2_pokemonsprites)
+
+  const spritesJSON = pokemon_v2_pokemonsprites && pokemon_v2_pokemonsprites ? JSON.parse(pokemon_v2_pokemonsprites[0].sprites) : {};
+  console.log(spritesJSON)
   return {
     id,
-    name,
+    name:startCase(name.split('-').join(' ')),
     height,
     weight,
     image: {
       props: {
         id,
         name,
+        defaultUrl: spritesJSON.front_default ? `${BASE_SPRITE_URL}${id}.png` : null,
+        shinyUrl: spritesJSON.front_shiny ? `${BASE_SHINY_SPRITE_URL}${id}.png` : null,
       },
     },
     abilities: {

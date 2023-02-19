@@ -28,6 +28,9 @@ query Pokemon(
     name
     height
     weight
+    pokemon_v2_pokemonsprites (limit: 1) {
+      sprites
+    }
     pokemon_v2_pokemonabilities{
       id
       pokemon_v2_ability {
@@ -64,6 +67,9 @@ query Pokemon(
     name
     height
     weight
+    pokemon_v2_pokemonsprites (limit: 1) {
+      sprites
+    }
     pokemon_v2_pokemonabilities{
       id
       pokemon_v2_ability {
@@ -100,6 +106,9 @@ query Pokemon(
     name
     height
     weight
+    pokemon_v2_pokemonsprites (limit: 1) {
+      sprites
+    }
     pokemon_v2_pokemonabilities{
       id
       pokemon_v2_ability {

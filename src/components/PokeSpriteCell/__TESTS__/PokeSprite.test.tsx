@@ -4,11 +4,13 @@ import {
   fireEvent,
 } from '@testing-library/react'
 
-import PokeSpriteCell, { baseFrontImageUrl, baseShinyFrontImageUrl } from '../PokeSpriteCell';
+import PokeSpriteCell from '../PokeSpriteCell';
 
 const mockProps = {
   id: 12,
-  name: "Test Pokekmon"
+  name: "Test Pokekmon",
+  defaultUrl: 'defaultUrl',
+  shinyUrl: 'shinyUrl',
 }
 
 describe('SpokeSprite', () => {
@@ -17,8 +19,8 @@ describe('SpokeSprite', () => {
     const { getAllByRole } = wrapper;
     const imgs = getAllByRole('img');
     expect(imgs).toHaveLength(2);
-    expect(imgs[0]).toHaveAttribute('src', `${baseFrontImageUrl}${mockProps.id}.png`);
-    expect(imgs[1]).toHaveAttribute('src', `${baseShinyFrontImageUrl}${mockProps.id}.png`);
+    expect(imgs[0]).toHaveAttribute('src', mockProps.defaultUrl);
+    expect(imgs[1]).toHaveAttribute('src', mockProps.shinyUrl);
   })
 })
 
