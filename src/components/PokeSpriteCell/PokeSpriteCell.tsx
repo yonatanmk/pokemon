@@ -24,7 +24,7 @@ function PokeSprite({ id, name }: IPokeSpriteCellProps) {
     if (src === frontUrl) {
       setHidden(true)
     } else if (src === frontShinyUrl) {
-      setShinyHidden(true);;;;;;
+      setShinyHidden(true);
     }
   }
 
