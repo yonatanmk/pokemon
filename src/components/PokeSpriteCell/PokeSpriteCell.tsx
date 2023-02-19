@@ -30,8 +30,11 @@ function PokeSprite({ id, name }: IPokeSpriteCellProps) {
 
   useEffect(() => {
     setHidden(false)
-    setShinyHidden(false)
+    setShinyHidden(false);;;;;;;;;;;
   }, [id])
+
+
+  asdf
 
   return (
     <div className={style.PokeSpriteCell}>
