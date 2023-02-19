@@ -74,9 +74,7 @@ function App() {
   const [selectedTypes, setSelectedTypes] = useState<number[]>([]);
   const [sortOrder, setSortOrder] = useState<ISortOrder>(SORT_ORDERS.ASC);
   const [sortField, setSortField] = useState<ISortField>(SORT_FIELDS.ID);
-  // const [selectedPokemon, setSelectedPokemon] = useState<IPokemonRow | null>(null)
-
-  const selectedPokemon = pokemonRows[0]
+  const [selectedPokemon, setSelectedPokemon] = useState<IPokemonRow | null>(null)
 
   const { data: typeData, loading: typeLoading, error: typeError } = useQuery<ITypeQueryData>(GET_POKEMON_TYPES);
 
@@ -176,10 +174,6 @@ function App() {
     })
   }
 
-  const onPokemonSelect = (pokemon: IPokemonRow) => {
-    console.log(pokemon)
-  }
-
   const onLastPage = pokemonRows.length === resultsCount;
 
   return (
@@ -251,7 +245,7 @@ function App() {
             sortOrderOverride={sortOrder}
             sortFieldOverride={sortField}
             onSort={onSortUpdate}
-            onRowSelect={onPokemonSelect}
+            onRowSelect={setSelectedPokemon}
           />
           {!onLastPage && !pokemonLoading && !!pokemonRows[0] && <button className={styles.loadmore} onClick={loadNextPage}>Load More</button>}
           <Loading display={pokemonLoading || typeLoading}/>

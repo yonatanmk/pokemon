@@ -32,9 +32,7 @@ function Cell({ fieldName, row, column, className: customClass, component, isHea
   }
 
   const onCellClick = () => {
-    console.log('onCellClick')
     if (!isHeader) {
-      console.log('!isHeader')
       onRowClick(row)
     }
   }

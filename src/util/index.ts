@@ -4,7 +4,7 @@ import uniqBy from 'lodash/uniqBy';
 import type { IPokemonRow, IPokemonQueryDatum, ITypeQueryDatum, IType, ISortField, IPokemonQueryAbility } from '../interfaces';
 
 export const PAGE_SIZE = 50;
-export const BASE_SPRITE_URL = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/`
+export const BASE_SPRITE_URL = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/`
 export const BASE_SHINY_SPRITE_URL = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/`
 
 export const SORT_FIELDS = {
