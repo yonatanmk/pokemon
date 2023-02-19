@@ -1,3 +1,5 @@
+@import "../../styles/variables/_mixins";
+
 .InfoPanel {
   border-top: 1px solid black;
 
@@ -9,7 +11,25 @@
   &__Image {
     height: 18rem;
     background-color: white;
-    border: 1px solid black;
     border-radius: 16px;
+
+    &--loaded {
+      border: 1px solid black;
+    }
+  }
+
+  &__Flavor {
+    text-align: justify;
+    padding: 1rem;
+
+    @include spinner;
+    .lds-ring div {
+      width: 8rem;
+      height: 8rem;
+    }
+
+    &--redacted {
+      text-align: center;
+    }
   }
 }

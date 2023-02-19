@@ -83,6 +83,15 @@ export interface IPokemonQueryAbilityText {
   short_effect: string;
 }
 
+export interface IFlavorQueryData {
+  pokemon_v2_pokemonspeciesflavortext: IFlavorQueryDatum[];
+}
+
+export interface IFlavorQueryDatum {
+  flavor_text: string;
+  pokemon_species_id: number;
+}
+
 export type ISortOrder = 'asc' | 'desc';
 export type ISortField = 'id' | 'name' | 'height' | 'weight';
 

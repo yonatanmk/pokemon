@@ -93,13 +93,6 @@ function App() {
 
   useEffect(() => {
     if (pokemonData && !pokemonLoading && !pokemonError) {
-      console.log('LOAD pokemonData')
-      console.log({
-        pokemonData,
-        search,
-        sortField,
-        sortOrder
-      })
       const newRows = pokemonData.pokemon_v2_pokemon.map( poke => formatPokemonRow(poke));
       setPokemonRows(prev => page === 0 ? newRows : [...prev, ...newRows]);
       setResultsCount(pokemonData.pokemon_v2_pokemon_aggregate.aggregate.count);

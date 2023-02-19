@@ -158,6 +158,26 @@ query PokemonTypes{
 }
 `;
 
+export const GET_POKEMON_FLAVOR = gql`
+query getFlavorText(
+  $pokemonId: Int,
+) {
+  pokemon_v2_pokemonspeciesflavortext (
+    limit: 1,
+    where: {
+      _and: [
+        { pokemon_species_id: { _eq: $pokemonId } },
+        { language_id: { _eq: 9 } }
+      ]
+    }
+  ) {
+    pokemon_species_id
+  	flavor_text
+  }
+}
+`;
+
+
 // export const GET_POKEMON_TYPE_FILTER = gql`
 // query Pokemon(
 //   $offset: Int!,
