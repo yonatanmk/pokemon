@@ -19,5 +19,6 @@ module.exports = {
   rules: {
     "react/react-in-jsx-scope": "off",
     "no-debugger": "warn",
+    "@typescript-eslint/no-explicit-any": "off",
   },
 };

@@ -1,7 +1,7 @@
 import React from 'react'
 import {
   render,
-  fireEvent,
+  // fireEvent,
 } from '@testing-library/react'
 
 import PokeSpriteCell from '../PokeSpriteCell';

@@ -1,5 +1,5 @@
 
-import React, { createContext } from 'react';
+import { createContext } from 'react';
 import { SORT_ORDERS } from './util';
 import type { ISortOrder, ISortField } from '../../interfaces';
 

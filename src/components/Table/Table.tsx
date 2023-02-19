@@ -1,4 +1,4 @@
-import { useState, SetStateAction, Dispatch } from 'react';
+import { useState } from 'react';
 import classnames from 'classnames';
 import orderBy from 'lodash/orderBy';
 import styles from "./Table.module.scss";
