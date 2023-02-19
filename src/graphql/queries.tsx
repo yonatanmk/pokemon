@@ -16,6 +16,7 @@ query Pokemon(
     offset: $offset, 
     where: {
       _and: [
+        { id: { _lt: 10250 } }
         { name: { _like: $nameSearch } },
         { pokemon_v2_pokemontypes: { type_id: { _in: $selectedTypes } } }
       ]
@@ -55,6 +56,7 @@ query Pokemon(
     offset: $offset, 
     where: {
       _and: [
+        { id: { _lt: 10250 } }
         { name: { _like: $nameSearch } },
         { pokemon_v2_pokemontypes: { type_id: { _in: $selectedTypes } } }
       ]
@@ -94,6 +96,7 @@ query Pokemon(
     offset: $offset, 
     where: {
       _and: [
+        { id: { _lt: 10250 } }
         { name: { _like: $nameSearch } },
         { pokemon_v2_pokemontypes: { type_id: { _in: $selectedTypes } } }
       ]
@@ -131,6 +134,7 @@ query Pokemon(
   pokemon_v2_pokemon_aggregate(
     where: {
       _and: [
+        { id: { _lt: 10250 } },
         { name: { _like: $nameSearch } },
         { pokemon_v2_pokemontypes: { type_id: { _in: $selectedTypes } } }
       ]
