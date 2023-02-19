@@ -230,9 +230,9 @@ function App() {
           </div>
           {/* <p>Search Input: {searchInput}</p>
           <p>Search: {search}</p> */}
-          <div className={styles["App__Sidebar__Row--label"]}>
+          {/* <div className={styles["App__Sidebar__Row--label"]}>
             <p>Types</p>
-          </div>
+          </div> */}
           <div className={classnames(styles.App__Sidebar__Row, styles.CheckboxList)}>
             {allTypes && allTypes.map(type => (
               <div className={styles.Checkbox} key={type.id}>
