@@ -179,6 +179,19 @@ function App() {
       <div className={styles.Header}>
         <h1>Pokédex</h1>
       </div>
+      <div className={styles.App__FilterBar}>
+        <h1 className={styles.App__FilterBar__count}>{resultsCount} Matching Pokémon</h1>
+        <div className={styles.App__FilterBar__filters}>
+          <div className={styles.Search}>
+            <input id="people-search" type="text" value={searchInput} onChange={handleSearchChange} placeholder="Search Name" />
+            <BsSearch />
+          </div>
+          <div className={styles.Search}>
+            <input id="people-search" type="text" value={searchInput} onChange={handleSearchChange} placeholder="Search Name" />
+            <BsSearch />
+          </div>
+        </div>
+      </div>
       <div className={styles.App__Body}>
         <div className={styles.App__Sidebar}>
         <div className={styles["App__Sidebar__Row--label"]}>
@@ -226,7 +239,7 @@ function App() {
             sortFieldOverride={sortField}
             onSort={onSortUpdate}
           />
-          {!onLastPage && !pokemonLoading && <button className={styles.loadmore} onClick={loadNextPage}>Load More</button>}
+          {!onLastPage && !pokemonLoading && !!pokemonRows[0] && <button className={styles.loadmore} onClick={loadNextPage}>Load More</button>}
           <Loading display={pokemonLoading || typeLoading}/>
         </div>
       </div>
