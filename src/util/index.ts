@@ -3,6 +3,8 @@ import startCase from 'lodash/startCase';
 import uniqBy from 'lodash/uniqBy';
 import type { IPokemonRow, IPokemonQueryDatum, ITypeQueryDatum, IType, ISortField, IPokemonQueryAbility } from '../interfaces';
 
+export { pokemonColumns } from './tableData';
+
 export const PAGE_SIZE = 50;
 export const BASE_SPRITE_URL = process.env.REACT_APP_BASE_SPRITE_URL;
 export const BASE_SHINY_SPRITE_URL = `${BASE_SPRITE_URL}/shiny`;

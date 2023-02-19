@@ -1,69 +1,17 @@
 import { useEffect, useState } from 'react';
-import startCase from 'lodash/startCase';
 import debounce from 'lodash/debounce';
 import styles from './App.module.scss';
 import { BsSearch } from "react-icons/bs";
 import { useQuery } from "@apollo/client"
 import classnames from 'classnames';
-import PokeSpriteCell from '../../components/PokeSpriteCell';
-import AbilitiesCell from '../../components/AbilitiesCell';
-import TypesCell from '../../components/TypesCell';
 import Table from '../../components/Table';
 import Loading from '../../components/Loading';
 import InfoPanel from '../../components/InfoPanel';
-import { formatPokemonRow, formatPokemonType, PAGE_SIZE, SORT_FIELDS, range } from '../../util';
-import type { ITableColumn, IPokemonRow, IType, ISortOrder, ISortField, ITypeQueryData } from '../../interfaces';
+import { formatPokemonRow, formatPokemonType, PAGE_SIZE, SORT_FIELDS, range, pokemonColumns } from '../../util';
+import type { IPokemonRow, IType, ISortOrder, ISortField, ITypeQueryData } from '../../interfaces';
 import { SORT_ORDERS } from '../../components/Table/util';
 import { usePokemonQuery } from '../../hooks';
 import { GET_POKEMON_TYPES } from '../../graphql/queries';
-
-export const columns: ITableColumn<IPokemonRow>[] = [
-  {
-    name: 'Pokédex No.',
-    index: 1,
-    field: 'id',
-  },
-  {
-    name: 'Name',
-    index: 2,
-    field: 'name',
-    formatFunction: row => startCase(row.name.split('-').join(' '))
-  },
-  {
-    name: 'Height',
-    index: 4,
-    field: 'height',
-    formatFunction: row => `${row.height / 10}m`
-  },
-  {
-    name: 'Weight',
-    index: 5,
-    field: 'weight',
-    disableSort: true,
-    formatFunction: row => `${row.weight / 10}kg`
-  },
-  {
-    name: 'Image',
-    index: 3,
-    field: 'image',
-    disableSort: true,
-    component: PokeSpriteCell,
-  },
-  {
-    name: 'Abilities',
-    index: 8,
-    field: 'abilities',
-    disableSort: true,
-    component: AbilitiesCell,
-  },
-  {
-    name: 'Types',
-    index: 7,
-    field: 'types',
-    disableSort: true,
-    component: TypesCell,
-  },
-];
 
 function App() {
   const [pokemonRows, setPokemonRows] = useState<IPokemonRow[]>([]);
@@ -197,19 +145,6 @@ function App() {
       <div className={styles.Header}>
         <h1>Pokédex</h1>
       </div>
-      {/* <div className={styles.App__FilterBar}>
-        <h1 className={styles.App__FilterBar__count}>{resultsCount} Matching Pokémon</h1>
-        <div className={styles.App__FilterBar__filters}>
-          <div className={styles.Search}>
-            <input id="people-search" type="text" value={searchInput} onChange={handleSearchChange} placeholder="Search Name" />
-            <BsSearch />
-          </div>
-          <div className={styles.Search}>
-            <input id="people-search" type="text" value={searchInput} onChange={handleSearchChange} placeholder="Search Name" />
-            <BsSearch />
-          </div>
-        </div>
-      </div> */}
       <div className={styles.App__Body}>
         <div className={styles.App__Sidebar}>
           <div className={classnames(styles["App__Sidebar__Row--head"], styles["App__Sidebar__Row--label"])}>
@@ -220,13 +155,7 @@ function App() {
               <input id="people-search" type="text" value={searchInput} onChange={handleSearchChange} placeholder="Search Pokémon Name" />
               <BsSearch />
             </div>
-            {/* <button className={styles.App__Sidebar__SearchButton} onClick={onSearch}>Search</button> */}
           </div>
-          {/* <p>Search Input: {searchInput}</p>
-          <p>Search: {search}</p> */}
-          {/* <div className={styles["App__Sidebar__Row--label"]}>
-            <p>Types</p>
-          </div> */}
           <div className={classnames(styles.App__Sidebar__Row, styles.CheckboxList)}>
             {allTypes && allTypes.map(type => (
               <div className={styles.Checkbox} key={type.id}>
@@ -241,22 +170,12 @@ function App() {
             ))}
           </div>
           <InfoPanel selectedPokemon={selectedPokemon} />
-          {/* <div className={styles.InfoPanel}>
-            {selectedPokemon && <div className={styles.InfoPanel__Content}>
-              <h1 className={styles.InfoPanel__Title}>{selectedPokemon.name} #{selectedPokemon.id}</h1>
-             {selectedPokemon.imageUrl && <img className={styles.InfoPanel__Image} src={selectedPokemon.imageUrl} alt={`sidebar-${selectedPokemon.name}-sprite`} />}
-            </div>}
-          </div> */}
-          {/* <p>{sortField} : {sortOrder}</p> */}
-          {/* {selectedTypes.map(type => <p key={type}>{type}</p>)} */}
-          {/* <p>pokemonLoading: {`${pokemonLoading}`}</p> */}
-          {/* <p>typeLoading: {`${typeLoading}`}</p> */}
         </div>
         <div className={styles.App__Content}>
           <Table
             id="_id"
             rows={pokemonRows} 
-            columns={columns} 
+            columns={pokemonColumns} 
             defaultSortPredicate="id" 
             backupSortPredicate="id"
             filters={[]}
