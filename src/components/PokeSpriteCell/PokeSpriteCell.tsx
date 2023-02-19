@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import style from './PokeSpriteCell.module.scss'
+import styles from './PokeSpriteCell.module.scss'
 import { BsQuestionLg } from "react-icons/bs";
 
 // export const baseFrontImageUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/`
@@ -40,11 +40,11 @@ function PokeSprite({ id, name, defaultUrl, shinyUrl }: IPokeSpriteCellProps) {
   const noShinyImage = shinyHidden || !shinyUrl;
 
   return (
-    <div className={style.PokeSpriteCell}>
+    <div className={styles.PokeSpriteCell}>
       {!noImage && <img src={defaultUrl} alt={`table-${name}-sprite`} onError={onError} />}
-      {noImage && <BsQuestionLg className={style.PokeSpriteCell__emptySVG}/>}
+      {noImage && <BsQuestionLg className={styles.PokeSpriteCell__emptySVG}/>}
       {!noShinyImage && <img src={shinyUrl} alt={`table-${name}-shiny-sprite`} onError={onError} />}
-      {noShinyImage && <BsQuestionLg className={style.PokeSpriteCell__emptySVG}/>}
+      {noShinyImage && <BsQuestionLg className={styles.PokeSpriteCell__emptySVG}/>}
     </div>
   )
   

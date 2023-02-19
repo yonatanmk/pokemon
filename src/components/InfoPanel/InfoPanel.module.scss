@@ -1,0 +1,15 @@
+.InfoPanel {
+  border-top: 1px solid black;
+
+  &__Title {
+    font-size: 1.5rem;
+    margin: 1rem
+  }
+
+  &__Image {
+    height: 18rem;
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 16px;
+  }
+}

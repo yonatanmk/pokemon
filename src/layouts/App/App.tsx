@@ -10,6 +10,7 @@ import AbilitiesCell from '../../components/AbilitiesCell';
 import TypesCell from '../../components/TypesCell';
 import Table from '../../components/Table';
 import Loading from '../../components/Loading';
+import InfoPanel from '../../components/InfoPanel';
 import { formatPokemonRow, formatPokemonType, PAGE_SIZE, SORT_FIELDS, range } from '../../util';
 import type { ITableColumn, IPokemonRow, IType, ISortOrder, ISortField, ITypeQueryData } from '../../interfaces';
 import { SORT_ORDERS } from '../../components/Table/util';
@@ -246,12 +247,13 @@ function App() {
               </div>
             ))}
           </div>
-          <div className={styles.InfoBlock}>
-            {selectedPokemon && <div className={styles.InfoBlock__Content}>
-              <h1 className={styles.InfoBlock__Title}>{selectedPokemon.name} #{selectedPokemon.id}</h1>
-             {selectedPokemon.imageUrl && <img className={styles.InfoBlock__Image} src={selectedPokemon.imageUrl} alt={`sidebar-${selectedPokemon.name}-sprite`} />}
+          <InfoPanel selectedPokemon={selectedPokemon} />
+          {/* <div className={styles.InfoPanel}>
+            {selectedPokemon && <div className={styles.InfoPanel__Content}>
+              <h1 className={styles.InfoPanel__Title}>{selectedPokemon.name} #{selectedPokemon.id}</h1>
+             {selectedPokemon.imageUrl && <img className={styles.InfoPanel__Image} src={selectedPokemon.imageUrl} alt={`sidebar-${selectedPokemon.name}-sprite`} />}
             </div>}
-          </div>
+          </div> */}
           {/* <p>{sortField} : {sortOrder}</p> */}
           {/* {selectedTypes.map(type => <p key={type}>{type}</p>)} */}
           {/* <p>pokemonLoading: {`${pokemonLoading}`}</p> */}

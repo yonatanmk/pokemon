@@ -1,4 +1,4 @@
-import style from "./HeaderCell.module.scss";
+import styles from "./HeaderCell.module.scss";
 import { useContext } from 'react';
 import { BsArrowUp, BsArrowDown } from "react-icons/bs";
 import classnames from "classnames";
@@ -43,7 +43,7 @@ function HeaderCell({ name, field, disableSort }: IHeaderCellProps) {
   }
 
   return (
-    <div className={classnames(style.HeaderCell, {[ style.HeaderCell__unsorted]: !isSorted })}>
+    <div className={classnames(styles.HeaderCell, {[ styles.HeaderCell__unsorted]: !isSorted })}>
       <button disabled={disableSort} onClick={onHeaderClick}>
         <p>{name}</p>
         <ArrowIcon />
