@@ -7,7 +7,7 @@ import classnames from 'classnames';
 import Table from '../../components/Table';
 import Loading from '../../components/Loading';
 import InfoPanel from '../../components/InfoPanel';
-import { formatPokemonRow, formatPokemonType, PAGE_SIZE, SORT_FIELDS, range, pokemonColumns } from '../../util';
+import { formatPokemonRow, formatPokemonType, PAGE_SIZE, SORT_FIELDS, pokemonColumns } from '../../util';
 import type { IPokemonRow, IType, ISortOrder, ISortField, ITypeQueryData } from '../../interfaces';
 import { SORT_ORDERS } from '../../components/Table/util';
 import { usePokemonQuery } from '../../hooks';
@@ -26,16 +26,9 @@ function App() {
   const [selectedPokemon, setSelectedPokemon] = useState<IPokemonRow | null>(null)
   const [loading, setLoading] = useState(false);
 
-  // TODO REMOVE QUERY
   const { data: typeData, loading: typeLoading, error: typeError } = useQuery<ITypeQueryData>(GET_POKEMON_TYPES);
 
-  const { data: pokemonData, loading: pokemonLoading, error: pokemonError, refetch: pokemonRefetch } = usePokemonQuery({
-    offset: 0,
-    nameSearch: `%%`,
-    sortOrder: SORT_ORDERS.ASC,
-    sortField: SORT_FIELDS.ID,
-    selectedTypes: range(1, 18)
-  });
+  const { data: pokemonData, loading: pokemonLoading, error: pokemonError, loadPokemon } = usePokemonQuery(); 
 
   const isLoading = loading || typeLoading || pokemonLoading
 
@@ -55,6 +48,16 @@ function App() {
       }
     }
   }, [typeData])
+
+  useEffect(() => {
+    loadPokemon({
+      offset: 0,
+      nameSearch: `%%`,
+      sortOrder: SORT_ORDERS.ASC,
+      sortField: SORT_FIELDS.ID,
+      selectedTypes: allTypes.map(type => type.id),
+    })
+  }, [allTypes])
 
   const refetch = ({
     reset = false,
@@ -79,7 +82,7 @@ function App() {
       setPokemonRows([])
     }
 
-    pokemonRefetch({ 
+    loadPokemon({
       offset: offsetArg || 0,
       limit,
       nameSearch: `%${nameSearchArg || search}%`,
