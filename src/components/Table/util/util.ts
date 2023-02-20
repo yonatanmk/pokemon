@@ -1,5 +1,5 @@
 import includes from 'lodash/includes';
-import type { IFilter, ISortOrder } from '../../interfaces';
+import type { IFilter, ISortOrder } from '../../../interfaces';
 
 export const SORT_ORDERS = Object.freeze({
   ASC: 'asc' as ISortOrder,
@@ -28,7 +28,7 @@ export const filterRows = (rows: any, filters: IFilter[]) => {
   })
 };
 
-const searchMatch = (value: string, search: string): boolean => {
+export const searchMatch = (value: string, search: string): boolean => {
   return !!value && value.toLowerCase().indexOf(search) > -1;
 };
 

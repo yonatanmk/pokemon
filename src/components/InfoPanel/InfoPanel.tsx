@@ -11,8 +11,6 @@ export type IInfoPanelProps = {
   selectedPokemon: IPokemonRow | null
 }
 
-const defaultFlavor = '[ REDACTED ]';
-
 const statNameMap : { [key: string]: string } = {
   hp: 'HP',
   attack: 'Atk',
@@ -58,7 +56,7 @@ function InfoPanel({ selectedPokemon }: IInfoPanelProps) {
         }
         <div className={classnames(styles.InfoPanel__Flavor, { [styles['InfoPanel__Flavor--redacted']] : !flavorText })}>
           {/* {loading && <div className={styles['lds-ring']}><div></div><div></div><div></div><div></div></div>} */}
-          {!loading && <p>{flavorText || defaultFlavor}</p>}
+          {!loading && flavorText && <p>{flavorText}</p>}
         </div>
         <div className={classnames(styles.InfoPanel__Row, styles['InfoPanel__Row--chart'])}>
           <h1 className={styles.InfoPanel__RowTitle}>Base Stats</h1>

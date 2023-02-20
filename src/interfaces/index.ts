@@ -1,12 +1,12 @@
 export interface IPokemonRow {
-  id: string;
+  id: number;
   name: string;
   height: number;
   weight: number;
   imageUrl: string | null;
   image: {
     props: {
-      id: string;
+      id: number;
       name: string;
       defaultUrl: string | null;
       shinyUrl: string | null;
@@ -41,7 +41,7 @@ export interface ITypeQueryData {
 }
 
 export interface IPokemonQueryDatum {
-  id: string;
+  id: number;
   name: string;
   height: number;
   weight: number;
@@ -125,7 +125,7 @@ export interface ITableCellComponent {
 export interface IFilter {
   type: 'SEARCH' | 'SELECT' | 'CUSTOM';
   field?: string;
-  value: string | string[];
+  value?: string | string[];
   filterMethod?: (row: any) => boolean;
 }
 
