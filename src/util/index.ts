@@ -58,3 +58,7 @@ export const formatPokemonType = (type: ITypeQueryDatum): IType => ({
   id: type.type_id,
   name: capitalize(type.pokemon_v2_type.name),
 });
+
+export const formatSearchQuery = (search: string): string => {
+  return search.replaceAll(' ', '-').toLowerCase()
+}

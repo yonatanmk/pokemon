@@ -4,6 +4,7 @@ import debounce from 'lodash/debounce';
 import { BsSearch } from "react-icons/bs";
 import type { IType } from '../../interfaces';
 import styles from './FilterPanel.module.scss';
+import { formatSearchQuery } from '../../util';
 
 export type IFilterPanelProps = {
   resultsCount: number;
@@ -23,8 +24,9 @@ function FilterPanel({
   const [searchInput, setSearchInput] = useState('');
 
   const handleSearchChange = (e: React.FormEvent<HTMLInputElement>) => {
-    setSearchInput(e.currentTarget.value);
-    debouncedSetSearch(e.currentTarget.value)
+    const searchValue = e.currentTarget.value;
+    setSearchInput(searchValue);
+    debouncedSetSearch(formatSearchQuery(searchValue));
   }
 
   const debouncedSetSearch = debounce(onSearchChange, 500);
