@@ -4,7 +4,7 @@ import { TableSortContext } from '../contexts';
 import styles from "./Cell.module.scss";
 import type { ITableCellComponent, ITableColumn } from '../../../interfaces';
 
-type ICellProps = {
+export type ICellProps = {
   fieldName: string;
   column: ITableColumn<any>;
   className?: string;
