@@ -75,8 +75,12 @@
     &:hover {
       cursor: pointer;
     }
-    margin-right: 0.25rem;
   }
 
-  &__label { }
+  &__label {
+    padding-left: 0.25rem;
+    &:hover {
+      cursor: pointer;
+    }
+  }
 }

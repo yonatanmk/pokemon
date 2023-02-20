@@ -39,6 +39,8 @@ function FilterPanel({
     onSelectedTypesChange(newSelectedTypes)
   };
 
+  const onCheckClickEvent = (id: number) => () => toggleTypeSelected(id);
+
   return (
     <div className={styles.FilterPanel}>
       <div className={classnames(styles["FilterPanel__Row--head"], styles["FilterPanel__Row--label"])}>
@@ -57,9 +59,9 @@ function FilterPanel({
               className={styles.Checkbox__checkbox} 
               type="checkbox" 
               checked={selectedTypes.includes(type.id)} 
-              onChange={() => toggleTypeSelected(type.id)}
+              onChange={onCheckClickEvent(type.id)}
             />
-            <label className={styles.Checkbox__label}>{type.name}</label>
+            <label className={styles.Checkbox__label} onClick={onCheckClickEvent(type.id)}>{type.name}</label>
           </div>
         ))}
       </div>
