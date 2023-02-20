@@ -6,7 +6,7 @@ import App from './layouts/App';
 
 const client = new ApolloClient({
   cache: new InMemoryCache(),
-  uri: "https://beta.pokeapi.co/graphql/v1beta"
+  uri: process.env.REACT_APP_API_URL
 });
 
 const root = ReactDOM.createRoot(
