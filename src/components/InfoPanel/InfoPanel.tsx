@@ -45,6 +45,7 @@ function InfoPanel({ selectedPokemon }: IInfoPanelProps) {
 
   return (
     <div className={styles.InfoPanel}>
+      {!selectedPokemon && <h1 className={styles.InfoPanel__Title}>Select a Pokémon to get started</h1>}
       {selectedPokemon && <div className={styles.InfoPanel__Content}>
         <h1 className={styles.InfoPanel__Title}>{selectedPokemon.name} #{selectedPokemon.id}</h1>
         {selectedPokemon.imageUrl && 
