@@ -50,7 +50,7 @@ describe('Util', () => {
             sprites: JSON.stringify(spriteJSON),
           },
         ],
-      }
+      } as IPokemonQueryDatum;
       const formattedPokemon = formatPokemonRow(mockSpritePokemonData);
       expect(formattedPokemon?.imageUrl).toEqual(`${BASE_IMAGE_URL}/${mockSpritePokemonData.id}.png`);
       expect(formattedPokemon?.image?.props?.defaultUrl).toEqual(`${BASE_SPRITE_URL}/${mockSpritePokemonData.id}.png`);
@@ -87,7 +87,7 @@ describe('Util', () => {
             }
           },
         ],
-      }
+      } as IPokemonQueryDatum;
 
       it('formats abilities correctly', async () => {
         const formattedPokemon = formatPokemonRow(mockAbilityPokemonData);
