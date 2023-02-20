@@ -7,6 +7,7 @@ import styles from './FilterPanel.module.scss';
 import { formatSearchQuery } from '../../util';
 
 export type IFilterPanelProps = {
+  search: string;
   resultsCount: number;
   allTypes: IType[];
   selectedTypes: number[];
@@ -15,6 +16,7 @@ export type IFilterPanelProps = {
 }
 
 function FilterPanel({ 
+  search,
   resultsCount,
   allTypes,
   selectedTypes,
@@ -26,7 +28,8 @@ function FilterPanel({
   const handleSearchChange = (e: React.FormEvent<HTMLInputElement>) => {
     const searchValue = e.currentTarget.value;
     setSearchInput(searchValue);
-    debouncedSetSearch(formatSearchQuery(searchValue));
+    const formattedSearch = formatSearchQuery(searchValue);
+    if (formattedSearch !== search) debouncedSetSearch(formatSearchQuery(searchValue));
   }
 
   const debouncedSetSearch = debounce(onSearchChange, 500);
