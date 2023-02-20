@@ -123,6 +123,9 @@ export interface IBaseMoveDatum {
     accuracy: number;
     power: number | null;
     name: string;
+    pokemon_v2_type: {
+      name: string;
+    }
     pokemon_v2_generation: {
       name: string;
     }
@@ -139,6 +142,7 @@ export interface IBaseMove {
   id: number;
   level: number;
   name: string;
+  type: string;
   power: string | number;
   accuracy: string | number;
   generation: string;

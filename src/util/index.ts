@@ -58,6 +58,7 @@ export const formatPokemonMove = (move: IBaseMoveDatum): IBaseMove => ({
   id: move.id,
   level: move.level,
   name: startCase(move?.pokemon_v2_move?.name.split('-').join(' ')),
+  type: startCase(move?.pokemon_v2_move?.pokemon_v2_type?.name || ''),
   power: move?.pokemon_v2_move?.power || '-',
   accuracy: move?.pokemon_v2_move?.accuracy || '-',
   generation: move?.pokemon_v2_move?.pokemon_v2_generation?.name?.split('-')[1].toUpperCase(),

@@ -66,23 +66,28 @@ export const moveColumns: ITableColumn<IPokemonMove>[] = [
     className: styles['move-chart-name-cell']
   },
   {
-    name: 'Power',
+    name: 'Type',
     index: 3,
+    field: 'type',
+  },
+  {
+    name: 'Power',
+    index: 4,
     field: 'power',
   },
   {
     name: 'Accuracy',
-    index: 4,
+    index: 5,
     field: 'accuracy',
   },
-  {
-    name: 'Generation',
-    index: 6,
-    field: 'generation',
-  },
+  // {
+  //   name: 'Generation',
+  //   index: 7,
+  //   field: 'generation',
+  // },
   // {
   //   name: 'Effect',
-  //   index: 5,
+  //   index: 6,
   //   field: 'abilities',
   //   disableSort: true,
   // },
