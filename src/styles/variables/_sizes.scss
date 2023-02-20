@@ -3,6 +3,6 @@ $tabletBreakpoint: 1024px;
 $mobileBreakpoint: 768px;
 
 $header-height: 3.5rem;
-$filter-bar-height: 3rem;
+$filter-panel-height: 20rem;
 $sidebar-padding: 1rem;
-$sidebar-width: 20rem;
+$sidebar-width: calc(26rem + 20px);
