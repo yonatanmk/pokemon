@@ -32,10 +32,9 @@ function PokeSprite({ id, name, defaultUrl, shinyUrl }: IPokeSpriteCellProps) {
 
   return (
     <div className={styles.PokeSpriteCell}>
+      {noImage && noShinyImage && <BsQuestionLg className={styles.PokeSpriteCell__emptySVG}/>}
       {!noImage && <img src={defaultUrl} alt={`table-${name}-sprite`} onError={onError} />}
-      {noImage && <BsQuestionLg className={styles.PokeSpriteCell__emptySVG}/>}
       {!noShinyImage && <img src={shinyUrl} alt={`table-${name}-shiny-sprite`} onError={onError} />}
-      {noShinyImage && <BsQuestionLg className={styles.PokeSpriteCell__emptySVG}/>}
     </div>
   )
   
