@@ -19,7 +19,7 @@ export const SORT_FIELDS = {
 
 export const formatPokemonRow = (pokemonData: IPokemonQueryDatum): IPokemonRow => {
   const { id, name, height, weight, pokemon_v2_pokemonabilities, pokemon_v2_pokemontypes, pokemon_v2_pokemonsprites } = pokemonData;
-  const spritesJSON = pokemon_v2_pokemonsprites && pokemon_v2_pokemonsprites ? JSON.parse(pokemon_v2_pokemonsprites[0].sprites) : {};
+  const spritesJSON = pokemon_v2_pokemonsprites && pokemon_v2_pokemonsprites && pokemon_v2_pokemonsprites[0]?.sprites ? JSON.parse(pokemon_v2_pokemonsprites[0]?.sprites) : {};
 
   return {
     id,
@@ -60,5 +60,5 @@ export const formatPokemonType = (type: ITypeQueryDatum): IType => ({
 });
 
 export const formatSearchQuery = (search: string): string => {
-  return search.trim().replaceAll(' ', '-').toLowerCase();
+  return search.trim().replace(/ /g, '-').toLowerCase();
 }
