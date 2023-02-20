@@ -33,7 +33,7 @@ describe('Cell', () => {
     const props = {
       ...mockProps, 
       column: {
-        formatFunction: (row: any) => 'FORMATTED TEXT',
+        formatFunction: (() => 'FORMATTED TEXT') as (row: any) => string,
       } as ITableColumn<any>,
     }
     const wrapper = render(<table><tbody><tr><CellComponent {...props} /></tr></tbody></table>)
