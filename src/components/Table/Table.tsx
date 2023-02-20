@@ -8,14 +8,13 @@ import HeaderCell from './HeaderCell';
 import { SORT_ORDERS, filterRows } from './util';
 import { TableSortContext } from './contexts';
 
-interface ITableProps<T> {
+export interface ITableProps<T> {
   className?: string;
   rows: any[];
   columns: ITableColumn<T>[];
   defaultSortPredicate: ISortField;
   backupSortPredicate: ISortField;
   filters?: IFilter[];
-  id: string | number;
   sortOrderOverride?: ISortOrder;
   sortFieldOverride?: ISortField;
   onSort?: (arg0: { sortField: ISortField, sortOrder: ISortOrder }) => void;

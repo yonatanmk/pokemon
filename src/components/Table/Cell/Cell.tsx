@@ -37,7 +37,7 @@ function Cell({ fieldName, row, column, className: customClass, component, isHea
     }
   }
   return (
-    <TableCell className={className} onClick={onCellClick}>
+    <TableCell id={`table-cell-${row?.id || 'xxx'}-col-${column.field}`} data-testid="table-cell" className={className} onClick={onCellClick}>
       {innerComponent}
     </TableCell>
   );
