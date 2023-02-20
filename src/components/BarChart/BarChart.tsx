@@ -1,9 +1,10 @@
 import { useRef, useEffect } from "react";
 import { select, axisBottom, axisLeft, scaleLinear, scaleBand } from "d3";
+import { IBarChartData } from '../../interfaces';
 import styles from './BarChart.module.scss';
 
 export type IBarChartProps = {
-  data: {label: string, value: number}[];
+  data: IBarChartData[];
   height: number;
   width: number;
 }

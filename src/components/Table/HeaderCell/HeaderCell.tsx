@@ -32,13 +32,11 @@ function HeaderCell({ name, field, disableSort }: IHeaderCellProps) {
       return;
     } else if (isSorted) {
       toggleSortOrder()
+    } else if (overrideSortMethod) {
+      onSort({ sortField: field, sortOrder: SORT_ORDERS.ASC })
     } else {
-      if (overrideSortMethod) {
-        onSort({ sortField: field, sortOrder: SORT_ORDERS.ASC })
-      } else {
-        setSortPredicate(field as ISortField)
-        setSortOrder(SORT_ORDERS.ASC)
-      }
+      setSortPredicate(field as ISortField)
+      setSortOrder(SORT_ORDERS.ASC)
     }
   }
 
