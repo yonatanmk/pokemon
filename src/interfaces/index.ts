@@ -135,3 +135,8 @@ export interface ISelectFilter {
   options: (string | number)[];
   updateFilterValues: React.Dispatch<React.SetStateAction<(string | number)[]>>;
 }
+
+export interface IBarChartData {
+  label: string;
+  value: number;
+}
