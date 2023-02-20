@@ -2,7 +2,8 @@ import startCase from 'lodash/startCase';
 import PokeSpriteCell from '../components/PokeSpriteCell';
 import AbilitiesCell from '../components/AbilitiesCell';
 import TypesCell from '../components/TypesCell';
-import type { ITableColumn, IPokemonRow } from '../interfaces';
+import type { ITableColumn, IPokemonRow, IPokemonMove } from '../interfaces';
+import styles from '../components/InfoPanel/InfoPanel.module.scss';
 
 export const pokemonColumns: ITableColumn<IPokemonRow>[] = [
   {
@@ -50,4 +51,39 @@ export const pokemonColumns: ITableColumn<IPokemonRow>[] = [
     disableSort: true,
     component: TypesCell,
   },
+];
+
+export const moveColumns: ITableColumn<IPokemonMove>[] = [
+  {
+    name: 'Level',
+    index: 1,
+    field: 'level',
+  },
+  {
+    name: 'Name',
+    index: 2,
+    field: 'name',
+    className: styles['move-chart-name-cell']
+  },
+  {
+    name: 'Power',
+    index: 3,
+    field: 'power',
+  },
+  {
+    name: 'Accuracy',
+    index: 4,
+    field: 'accuracy',
+  },
+  {
+    name: 'Generation',
+    index: 6,
+    field: 'generation',
+  },
+  // {
+  //   name: 'Effect',
+  //   index: 5,
+  //   field: 'abilities',
+  //   disableSort: true,
+  // },
 ];

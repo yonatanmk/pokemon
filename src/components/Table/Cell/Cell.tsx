@@ -2,6 +2,7 @@ import classnames from "classnames";
 import { useContext } from 'react';
 import { TableSortContext } from '../contexts';
 import styles from "./Cell.module.scss";
+import tableStyles from "../Table.module.scss";
 import type { ITableCellComponent, ITableColumn } from '../../../interfaces';
 
 export type ICellProps = {
@@ -13,10 +14,15 @@ export type ICellProps = {
   row: any;
 };
 function Cell({ fieldName, row, column, className: customClass, component, isHeader = false }: ICellProps) {
-  const { onRowClick } = useContext(TableSortContext);
+  const { onRowClick, cellClickDisabled } = useContext(TableSortContext);
   const field = row[fieldName]
   const TableCell = isHeader ? 'th' : 'td';
-  const className = classnames(styles.cell, customClass, { [styles.cell__header]: isHeader });
+  const className = classnames(styles.cell, {
+    [customClass || '']: !!customClass && !isHeader,
+    [styles.cell__header]: isHeader,
+    [tableStyles.Cell__Highlight]: !cellClickDisabled,
+  });
+
   let innerComponent;
 
   if (component) {

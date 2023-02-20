@@ -24,6 +24,18 @@ export interface IPokemonRow {
   } 
 }
 
+export interface IPokemonMove {
+  id: number;
+  level: number;
+  name: string;
+  power: number | null;
+  accuracy: number;
+  generation: {
+      name: string;
+  };
+  effect: string
+}
+
 export interface IPokemonAbility {
   id: number;
   name: string;
@@ -86,6 +98,7 @@ export interface IPokemonQueryAbilityText {
 export interface ISinglePokemonData {
   pokemon_v2_pokemonspeciesflavortext: IFlavorQueryDatum[];
   pokemon_v2_pokemonstat: IBaseStatDatum[];
+  pokemon_v2_pokemonmove: IBaseMoveDatum[]
 }
 
 export interface IFlavorQueryDatum {
@@ -102,6 +115,36 @@ export interface IBaseStatDatum {
   }
 }
 
+export interface IBaseMoveDatum {
+  id: number;
+  move_id: number;
+  level: number;
+  pokemon_v2_move: {
+    accuracy: number;
+    power: number | null;
+    name: string;
+    pokemon_v2_generation: {
+      name: string;
+    }
+    pokemon_v2_moveeffect: {
+      pokemon_v2_moveeffecteffecttexts: {
+        effect: string;
+        short_effect: string;
+      }[]
+    }
+  }
+}
+
+export interface IBaseMove {
+  id: number;
+  level: number;
+  name: string;
+  power: string | number;
+  accuracy: string | number;
+  generation: string;
+  effect: string;
+}
+
 export type ISortOrder = 'asc' | 'desc';
 export type ISortField = 'id' | 'name' | 'height' | 'weight';
 
@@ -110,6 +153,7 @@ export interface ITableColumn<T> {
   index: number;
   // field: keyof T;
   field: string;
+  className?: string;
   component?: React.ComponentType<any>;
   disableSort?: boolean;
   sortByFunction?: (row: any) => any;

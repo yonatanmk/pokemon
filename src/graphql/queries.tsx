@@ -182,6 +182,33 @@ query getFlavorText(
       name
     }
   }
+  pokemon_v2_pokemonmove ( 
+    where: { 
+      _and: {
+        level: { _gt: 0 },
+        pokemon_id: { _eq: $pokemonId }
+      }
+    },
+    distinct_on: move_id
+  ) {
+    id
+    move_id
+    level
+    pokemon_v2_move {
+      accuracy
+      power
+      name
+      pokemon_v2_generation {
+        name
+      }
+      pokemon_v2_moveeffect {
+        pokemon_v2_moveeffecteffecttexts {
+          effect
+          short_effect
+        }
+      }
+    }
+  }
 }
 `;
 

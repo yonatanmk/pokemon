@@ -19,6 +19,7 @@ function Row({ row, columns, className, isHeader }: IRowProps) {
           fieldName={col.field}
           row={row}
           column={col}
+          className={col.className}
           component={col.component}
           isHeader={isHeader}
         />

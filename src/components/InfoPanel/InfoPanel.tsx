@@ -6,6 +6,9 @@ import { useQuery } from "@apollo/client"
 import type { ISinglePokemonData, IBarChartData } from '../../interfaces';
 import { GET_POKEMON_DATA } from '../../graphql/queries';
 import BarChart from '../BarChart';
+import Table from '../Table';
+import { moveColumns } from '../../util/tableData';
+import { formatPokemonMove } from '../../util';
 
 export type IInfoPanelProps = {
   selectedPokemon: IPokemonRow | null
@@ -38,6 +41,8 @@ function InfoPanel({ selectedPokemon }: IInfoPanelProps) {
     setImageLoaded(true);
   }
 
+  const moveset = useMemo(() => (data?.pokemon_v2_pokemonmove || []).map(formatPokemonMove), [data]);
+
   const baseStats = useMemo(() => (data?.pokemon_v2_pokemonstat || []).map(datum => ({
     label: statNameMap[datum.pokemon_v2_stat.name],
     value: datum.base_stat,
@@ -66,6 +71,16 @@ function InfoPanel({ selectedPokemon }: IInfoPanelProps) {
           {/* {loading && <div className={styles['lds-ring']}><div></div><div></div><div></div><div></div></div>} */}
           {!loading && flavorText && <p>{flavorText}</p>}
         </div>
+        {moveset && moveset[0] && <div className={classnames(styles.InfoPanel__Row, styles['InfoPanel__Row--table'])}>
+          <h1 className={classnames(styles.InfoPanel__RowTitle, styles['InfoPanel__RowTitle--chart'])}>Moveset</h1>
+          <Table
+            rows={moveset}
+            columns={moveColumns}
+            defaultSortPredicate="level"
+            backupSortPredicate="level"
+            filters={[]}
+          />
+        </div>}
         <div className={classnames(styles.InfoPanel__Row, styles['InfoPanel__Row--chart'])}>
           <h1 className={styles.InfoPanel__RowTitle}>Base Stats</h1>
           <BarChart data={baseStatsChartData} height={BAR_CHART_HEIGHT} width={BAR_CHART_WIDTH}/>
