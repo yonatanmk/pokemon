@@ -136,6 +136,7 @@ function App() {
       <div className={styles.App__Body}>
         <div className={styles.App__Sidebar}>
           <FilterPanel
+            search={search}
             resultsCount={resultsCount}
             allTypes={allTypes}
             selectedTypes={selectedTypes}
