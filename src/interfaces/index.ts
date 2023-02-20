@@ -125,7 +125,7 @@ export interface ITableCellComponent {
 export interface IFilter {
   type: 'SEARCH' | 'SELECT' | 'CUSTOM';
   field?: string;
-  value: string | string[];
+  value?: string | string[];
   filterMethod?: (row: any) => boolean;
 }
 
