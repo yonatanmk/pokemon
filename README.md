@@ -22,6 +22,10 @@ You can filter the Pokémon list via either a name search, or by Pokémon type, 
 
 You can click on an entry row in the Pokémon list to display more information on that pokemon in the bottom half of the side bar. Currently this info panel displays the Pokémon name, entry number, official artwork, and flavor text. Many of the later Pokémon entries in the Pokédex do not have flavor text and are therefore "REDACTED".
 
+Underneath the Pokémon image is a bar chart displaying the base stats of the currently selected Pokémon.
+
+<img width="1496" alt="Pokedex Screenshot" src="https://user-images.githubusercontent.com/20758953/219992179-ab4c497a-b11c-499b-a442-3d343729d424.png">
+
 ## Getting Started
 
 1. Clone the repository locally
