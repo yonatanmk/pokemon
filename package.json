@@ -60,7 +60,6 @@
     "@typescript-eslint/parser": "^5.52.0",
     "eslint": "^8.34.0",
     "eslint-plugin-react": "^7.32.2",
-    "husky": "^8.0.3",
-    "react-test-renderer": "^18.2.0"
+    "husky": "^8.0.3"
   }
 }
