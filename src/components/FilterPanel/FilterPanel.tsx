@@ -35,7 +35,7 @@ function FilterPanel({
   };
 
   return (
-    <>
+    <div className={styles.FilterPanel}>
       <div className={classnames(styles["FilterPanel__Row--head"], styles["FilterPanel__Row--label"])}>
         <p>{resultsCount} Matching Pokémon</p>
       </div>
@@ -58,7 +58,7 @@ function FilterPanel({
           </div>
         ))}
       </div>
-    </>
+    </div>
   )
 }
 

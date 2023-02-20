@@ -158,7 +158,7 @@ query PokemonTypes{
 }
 `;
 
-export const GET_POKEMON_FLAVOR = gql`
+export const GET_POKEMON_DATA = gql`
 query getFlavorText(
   $pokemonId: Int,
 ) {
@@ -173,6 +173,14 @@ query getFlavorText(
   ) {
     pokemon_species_id
   	flavor_text
+  }
+  pokemon_v2_pokemonstat (where: { pokemon_id: { _eq: $pokemonId } }) {
+    id
+    pokemon_id
+    base_stat
+    pokemon_v2_stat {
+      name
+    }
   }
 }
 `;

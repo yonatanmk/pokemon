@@ -83,13 +83,23 @@ export interface IPokemonQueryAbilityText {
   short_effect: string;
 }
 
-export interface IFlavorQueryData {
+export interface ISinglePokemonData {
   pokemon_v2_pokemonspeciesflavortext: IFlavorQueryDatum[];
+  pokemon_v2_pokemonstat: IBaseStatDatum[];
 }
 
 export interface IFlavorQueryDatum {
   flavor_text: string;
   pokemon_species_id: number;
+}
+
+export interface IBaseStatDatum {
+  id: number;
+  pokemon_id: number;
+  base_stat: number;
+  pokemon_v2_stat: {
+    name: string;
+  }
 }
 
 export type ISortOrder = 'asc' | 'desc';

@@ -1,17 +1,27 @@
 @import "../../styles/variables/_mixins";
+@import "../../styles/variables/_sizes";
 
 .InfoPanel {
   border-top: 1px solid black;
+  height: calc(100vh - $header-height - $filter-panel-height);
+  overflow-y: scroll;
+  box-sizing: border-box;
 
   &__Title {
     font-size: 1.5rem;
     margin: 1rem
   }
 
+  &__RowTitle {
+    font-size: 1.5rem;
+    font-weight: normal;
+  }
+
   &__Image {
-    height: 18rem;
+    height: 20rem;
     background-color: white;
     border-radius: 16px;
+    margin: auto;
 
     &--loaded {
       border: 1px solid black;
@@ -30,6 +40,14 @@
 
     &--redacted {
       text-align: center;
+    }
+  }
+
+  &__Row {
+    &--chart {
+      border-top: 1px solid black;
+      background-color: white;
+      padding: $sidebar-padding;
     }
   }
 }
