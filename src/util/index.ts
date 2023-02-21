@@ -73,3 +73,5 @@ export const formatPokemonType = (type: ITypeQueryDatum): IType => ({
 export const formatSearchQuery = (search: string): string => {
   return search.trim().replace(/ /g, '-').toLowerCase();
 }
+
+export const formatFlavorText = (text?: string): string => (text || '').split('\f').join(' ');

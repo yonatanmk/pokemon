@@ -9,7 +9,7 @@ import { GET_POKEMON_DATA } from '../../graphql/queries';
 import BarChart from '../BarChart';
 import Table from '../Table';
 import { moveColumns } from '../../util/tableData';
-import { formatPokemonMove } from '../../util';
+import { formatPokemonMove, formatFlavorText } from '../../util';
 
 export type IInfoPanelProps = {
   selectedPokemon: IPokemonRow | null
@@ -37,12 +37,11 @@ function InfoPanel({ selectedPokemon }: IInfoPanelProps) {
     },
   })
 
-  const flavorText = data?.pokemon_v2_pokemonspeciesflavortext?.[0]?.flavor_text;
-
   const onImageLoaded = () => {
     setImageLoaded(true);
   }
 
+  const flavorText = useMemo(() => formatFlavorText(data?.pokemon_v2_pokemonspeciesflavortext?.[0]?.flavor_text), [data]);
   const moveset = useMemo(() => (data?.pokemon_v2_pokemonmove || []).map(formatPokemonMove), [data]);
   const baseStats = useMemo(() => (data?.pokemon_v2_pokemonstat || []).map(datum => ({
     label: statNameMap[datum.pokemon_v2_stat.name],
