@@ -22,7 +22,9 @@ You can filter the Pokémon list via either a name search, or by Pokémon type, 
 
 You can click on an entry row in the Pokémon list to display more information on that pokemon in the bottom half of the side bar. Currently this info panel displays the Pokémon name, entry number, official artwork, and flavor text. Many of the later Pokémon entries in the Pokédex do not have flavor text to be shown below the Pokémon image.
 
-Underneath the Pokémon image is a bar chart displaying the base stats of the currently selected Pokémon.
+Next underneath the Pokémon image is a bar chart displaying the base stats of the currently selected Pokémon.
+
+After that is a list of all the moves that a Pokémon can learn. The moves can be sorted by any field and are secondarily sorted by level. Sorting in this table is handled in the client instead of by the graphQL server because the list is small and doesn't need to be paginated. I've reused the same table for both this list and the Pokémon list.
 
 <img width="1496" alt="Pokedex Screenshot" src="https://user-images.githubusercontent.com/20758953/219992179-ab4c497a-b11c-499b-a442-3d343729d424.png">
 
