@@ -12,13 +12,14 @@ type IRowProps = {
 
 function Row({ row, columns, className, isHeader }: IRowProps) {
   return (
-    <tr className={classnames(styles.Row, className, {[styles.row__header] : isHeader})}>
+    <tr id={`table-row-${row?.id || 'xxx'}`} data-testid="table-row" className={classnames(styles.Row, className, {[styles.row__header] : isHeader})}>
       {columns.map(
         (col, index) => <Cell 
           key={index} 
           fieldName={col.field}
           row={row}
           column={col}
+          className={col.className}
           component={col.component}
           isHeader={isHeader}
         />

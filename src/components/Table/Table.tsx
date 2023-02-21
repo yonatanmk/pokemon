@@ -8,18 +8,17 @@ import HeaderCell from './HeaderCell';
 import { SORT_ORDERS, filterRows } from './util';
 import { TableSortContext } from './contexts';
 
-interface ITableProps<T> {
+export interface ITableProps<T> {
   className?: string;
   rows: any[];
   columns: ITableColumn<T>[];
-  defaultSortPredicate: ISortField;
-  backupSortPredicate: ISortField;
+  defaultSortPredicate: string;
+  backupSortPredicate: string;
   filters?: IFilter[];
-  id: string | number;
   sortOrderOverride?: ISortOrder;
   sortFieldOverride?: ISortField;
   onSort?: (arg0: { sortField: ISortField, sortOrder: ISortOrder }) => void;
-  onRowSelect: (arg0: any) => void;
+  onRowSelect?: (arg0: any) => void;
 }
 
 function Table<T extends object>({ 
@@ -32,7 +31,7 @@ function Table<T extends object>({
   sortOrderOverride,
   sortFieldOverride,
   onSort,
-  onRowSelect = () => {/*default to empty function*/},
+  onRowSelect,
 }: ITableProps<T>) {
   const [sortPredicate, setSortPredicate] = useState(defaultSortPredicate);
   const [sortOrder, setSortOrder] = useState(SORT_ORDERS.ASC as ISortOrder);
@@ -43,10 +42,8 @@ function Table<T extends object>({
   }));
 
   const filteredRows = filters && filters.length > 0 ? filterRows(rows, filters)  : rows;
-
   const sortByColumn = columns.find(col => col.field === sortPredicate) as ITableColumn<T>;
   const sortByFunction = sortByColumn.sortByFunction || sortPredicate; // default to field value if there's no sort by function
-
   const sortedRows = sortFieldOverride ? filteredRows : orderBy(filteredRows, [sortByFunction, defaultSortPredicate || backupSortPredicate], [sortOrder, sortOrder]);
 
   const trueSortPredicate = sortFieldOverride || sortPredicate;
@@ -70,6 +67,8 @@ function Table<T extends object>({
     sortOrder: trueSortOrder,
   } as Partial<any>) as any;
 
+  const onRowClick = onRowSelect || (() => { /* empty function */ });
+
   return (
     <table className={classnames(styles.table, className)}>
       <TableSortContext.Provider value={{ 
@@ -79,7 +78,8 @@ function Table<T extends object>({
         setSortOrder, 
         onSort: (onSort || (() => setSortOrder)),
         overrideSortMethod: !!onSort,
-        onRowClick: onRowSelect,
+        cellClickDisabled: !onRowSelect,
+        onRowClick,
       }}>
         <thead>
           <Row row={headerRow} columns={headerColumns} isHeader/>

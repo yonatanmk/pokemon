@@ -19,6 +19,7 @@ const mockContext = {
   setSortPredicate:(() => null),
   setSortOrder: (() => null),
   onSort: (() => null),
+  cellClickDisabled: false,
   overrideSortMethod: false,
 }
 

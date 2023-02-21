@@ -147,10 +147,9 @@ function App() {
         </div>
         <div className={styles.App__Content}>
           <Table
-            id="_id"
-            rows={pokemonRows} 
-            columns={pokemonColumns} 
-            defaultSortPredicate="id" 
+            rows={pokemonRows}
+            columns={pokemonColumns}
+            defaultSortPredicate="id"
             backupSortPredicate="id"
             filters={[]}
             sortOrderOverride={sortOrder}

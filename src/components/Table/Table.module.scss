@@ -4,7 +4,7 @@
   width: 100%;
   border-collapse: collapse;
 
-  tr:hover td {
+  tr:hover .Cell__Highlight {
     background-color: #dae1f7;
     cursor: pointer;
   }

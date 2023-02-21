@@ -19,6 +19,7 @@ const mockContext = {
   setSortOrder: (() => null),
   onSort: (() => null),
   overrideSortMethod: false,
+  cellClickDisabled: false,
   onRowClick: (() => null), 
 }
 

@@ -3,7 +3,6 @@ import {
   filterRows,
   searchMatch,
 } from '../index';
-// import type { IPokemonQueryDatum, ITypeQueryDatum } from '../../interfaces';
 
 describe('Util', () => {
 

@@ -1,7 +1,7 @@
 import styles from './AbilitiesCell.module.scss';
 import startCase from 'lodash/startCase';
 import Tippy from '@tippyjs/react';
-import 'tippy.js/dist/tippy.css'; // optional
+import 'tippy.js/dist/tippy.css';
 
 import type { IPokemonAbility } from '../../interfaces';
 
