@@ -155,7 +155,6 @@ export type ISortField = 'id' | 'name' | 'height' | 'weight';
 export interface ITableColumn<T> {
   name: string;
   index: number;
-  // field: keyof T;
   field: string;
   className?: string;
   component?: React.ComponentType<any>;
