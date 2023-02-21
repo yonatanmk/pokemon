@@ -1,17 +1,12 @@
 @import "../../styles/variables/_sizes";
 
 .BarChart {
-  // background-color: red;
   overflow: visible;
-  // margin-bottom: 0rem;
 
   transform: translate(10px, 20px);
 
   &__Container {
-    // background-color: white;
     margin: auto;
     margin-bottom: $sidebar-padding;
-    // border-radius: 4px;
-    // border: 1px solid black;
   }
 }
