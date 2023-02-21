@@ -44,7 +44,6 @@ function InfoPanel({ selectedPokemon }: IInfoPanelProps) {
   }
 
   const moveset = useMemo(() => (data?.pokemon_v2_pokemonmove || []).map(formatPokemonMove), [data]);
-
   const baseStats = useMemo(() => (data?.pokemon_v2_pokemonstat || []).map(datum => ({
     label: statNameMap[datum.pokemon_v2_stat.name],
     value: datum.base_stat,
